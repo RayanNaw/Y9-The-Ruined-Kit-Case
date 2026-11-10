@@ -149,6 +149,19 @@ dl.defs dd{margin:0}
 .fileb svg{width:100%;height:auto}
 @media (max-width:520px){.fileb{grid-template-columns:1fr}.fileb > span{max-width:120px}}
 
+.game{display:grid;grid-template-columns:170px 1fr;gap:16px;align-items:center}
+@media (max-width:620px){.game{grid-template-columns:1fr}.tray{flex-direction:row!important;flex-wrap:wrap}}
+.tray{display:flex;flex-direction:column;gap:10px}
+.echip{display:inline-flex;align-items:center;gap:10px;border:2px solid var(--enzyme);background:var(--surface);border-radius:12px;padding:10px 14px;font-weight:700;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.echip i{width:28px;height:22px;background:var(--enzyme);border-radius:5px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,0 66%,35% 50%,0 34%);flex:none}
+.echip[aria-pressed="true"]{background:var(--enzyme);color:#ffffff}
+.echip[aria-pressed="true"] i{background:#ffffff}
+.ghostchip{position:fixed;z-index:60;pointer-events:none;transform:translate(-50%,-50%);opacity:.9}
+#bigShirt{width:100%;max-width:520px;height:auto;justify-self:center;touch-action:none}
+#bigShirt [data-stain]{cursor:pointer}
+#bigShirt .gone{transition:opacity .9s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+#bigShirt .nope{animation:shake .35s 2;transform-box:fill-box}
 .board{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
 .flip{perspective:900px;cursor:pointer;border-radius:12px}
 .fi{display:grid;transition:transform .55s;transform-style:preserve-3d;height:100%}
@@ -216,6 +229,16 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
+    <filter id="rough" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="0.8"/></filter>
+    <filter id="soak" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="2.2"/></filter>
+    <filter id="cloth" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="2" result="t"/><feColorMatrix in="t" type="matrix" values="0 0 0 0 0.55  0 0 0 0 0.55  0 0 0 0 0.52  0 0 0 0.18 0" result="g"/><feComposite in="g" in2="SourceGraphic" operator="in" result="gt"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="gt"/></feMerge></filter>
+    <radialGradient id="gEgg"><stop offset="0" stop-color="#f6d35b"/><stop offset=".7" stop-color="#e8b63a"/><stop offset="1" stop-color="#c48a1c"/></radialGradient>
+    <radialGradient id="gCooked"><stop offset="0" stop-color="#d79a2c"/><stop offset=".6" stop-color="#b27418"/><stop offset="1" stop-color="#7d4d0c"/></radialGradient>
+    <radialGradient id="gPale"><stop offset="0" stop-color="#f7e7ae" stop-opacity=".7"/><stop offset=".8" stop-color="#eed388" stop-opacity=".85"/><stop offset="1" stop-color="#d9b55c"/></radialGradient>
+    <radialGradient id="gRice"><stop offset="0" stop-color="#f2b24a"/><stop offset=".7" stop-color="#e2922c"/><stop offset="1" stop-color="#b8661a"/></radialGradient>
+    <radialGradient id="gInk"><stop offset="0" stop-color="#3a4fbf"/><stop offset=".7" stop-color="#26379a"/><stop offset="1" stop-color="#18246b"/></radialGradient>
+    <radialGradient id="gBlood"><stop offset="0" stop-color="#9c2a1c"/><stop offset=".7" stop-color="#7a1d14"/><stop offset="1" stop-color="#4e120c"/></radialGradient>
+    <radialGradient id="gGrease"><stop offset="0" stop-color="#c9a865" stop-opacity=".55"/><stop offset=".8" stop-color="#a88848" stop-opacity=".7"/><stop offset="1" stop-color="#806430" stop-opacity=".85"/></radialGradient>
     <pattern id="weave" width="6" height="6" patternUnits="userSpaceOnUse">
       <rect width="6" height="6" style="fill:var(--fabric)"/>
       <path d="M0 3H6M3 0V6" style="stroke:var(--weave)" stroke-width="1"/>
@@ -275,11 +298,11 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
   </div>
   <div class="card email">
     <div class="kits">
-      <div class="kit"><span id="kitA"></span><b>Omar’s kit</b><span class="t bad">90 °C</span><span class="small muted">still stained</span></div>
+      <div class="kit"><span id="kitA"></span><b>Omar’s kit</b><span class="small">washed at a temperature of</span><span class="t bad">90 °C</span><span class="small muted">still stained</span></div>
       <div class="kit"><span class="boxArt"></span><b>Same powder</b><span class="small muted">used for both kits</span></div>
-      <div class="kit"><span id="kitB"></span><b>Zaid’s kit</b><span class="t good">40 °C</span><span class="small muted">spotless</span></div>
+      <div class="kit"><span id="kitB"></span><b>Aarav’s kit</b><span class="small">washed at a temperature of</span><span class="t good">40 °C</span><span class="small muted">stain gone</span></div>
     </div>
-    <blockquote>“The final is tomorrow! My mom washed my kit at 90 °C with your biological powder to ‘kill the stains’. It’s still stained. Zaid used the same powder at 40 °C. Why?!” <span class="muted small">Omar, Year 9 football captain</span></blockquote>
+    <blockquote>“The final game is tomorrow! My mom washed my kit at a temperature of 90 °C with the biological powder to ‘kill the stains’. It’s still stained. Aarav used the same powder at a temperature of 40 °C, and the stain is gone. Why?!” <span class="muted small">Omar, Year 9 football captain</span></blockquote>
     <div class="chips" aria-label="Stains">
       <span class="chip"><i class="dot" style="background:var(--egg)"></i>egg</span>
       <span class="chip"><i class="dot" style="background:var(--bad)"></i>blood</span>
@@ -361,6 +384,22 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
     </div>
     <p class="small">Bio powder contains all three. Non-bio powder contains none. Ink is a dye: it is not a protein, fat or starch.</p>
     <p class="boost r-more"><b>For the table on your sheet:</b> read the nutrient in each row, then find the enzyme above that breaks down that nutrient.</p>
+  </div>
+
+  <div class="card">
+    <span class="eyebrow">Try it · Clean Omar’s kit</span>
+    <p><b>Drag an enzyme onto a stain.</b> If it is the right enzyme, the stain disappears. On a tablet you can also tap an enzyme, then tap a stain.</p>
+    <p class="boost r-more"><b>Tip:</b> check Research File B. What is each stain made of? Which enzyme breaks that down?</p>
+    <div class="game">
+      <div class="tray" id="tray">
+        <button type="button" class="echip" data-enz="protease"><i></i>protease</button>
+        <button type="button" class="echip" data-enz="lipase"><i></i>lipase</button>
+        <button type="button" class="echip" data-enz="amylase"><i></i>amylase</button>
+      </div>
+      <svg id="bigShirt" viewBox="0 0 400 360" role="img" aria-label="Omar’s shirt with five stains: egg, blood, grease, rice and ink"></svg>
+    </div>
+    <p class="readout" id="gameMsg" aria-live="polite">Pick up an enzyme to start.</p>
+    <div class="box"><span class="small muted" id="gameCount"></span><button class="btn ghost" type="button" id="gameReset">Start again</button></div>
   </div>
 
   <div class="hints">
@@ -731,27 +770,37 @@ lockKey($('#lk2'),[[40,'40 °C'],[90,'90 °C']]);
 
 /* ---------- evidence cards ---------- */
 const TESTS=[
- {n:1,stain:'Egg',powder:'Bio',temp:40,res:'Removed',look:'gone'},
- {n:2,stain:'Egg',powder:'Bio',temp:90,res:'Stained',look:'cooked'},
- {n:3,stain:'Egg',powder:'Non-bio (no enzymes)',temp:40,res:'Stained',look:'pale'},
- {n:4,stain:'Grease',powder:'Bio',temp:40,res:'Removed',look:'gone'},
- {n:5,stain:'Rice (starch)',powder:'Bio',temp:40,res:'Removed',look:'gone'},
- {n:6,stain:'Rice (starch)',powder:'Protease only',temp:40,res:'Stained',look:'rice'},
- {n:7,stain:'Ink',powder:'Bio',temp:40,res:'Stained',look:'ink'}];
+ {n:1,stain:'Egg',name:'Egg stain',powder:'Bio',temp:40,res:'Removed',look:'gone'},
+ {n:2,stain:'Egg',name:'Egg stain',powder:'Bio',temp:90,res:'Stained',look:'cooked'},
+ {n:3,stain:'Egg',name:'Egg stain',powder:'Non-bio (no enzymes)',temp:40,res:'Stained',look:'pale'},
+ {n:4,stain:'Grease',name:'Grease stain',powder:'Bio',temp:40,res:'Removed',look:'gone'},
+ {n:5,stain:'Rice (starch)',name:'Rice stain',powder:'Bio',temp:40,res:'Removed',look:'gone'},
+ {n:6,stain:'Rice (starch)',name:'Rice stain',powder:'Protease only',temp:40,res:'Stained',look:'rice'},
+ {n:7,stain:'Ink',name:'Ink stain',powder:'Bio',temp:40,res:'Stained',look:'ink'}];
+function stainSVG(kind,cx,cy,r,seed){
+  const R=rng(seed); let g='';
+  const main=(fill,filt,rr)=>`<path d="${blob(cx,cy,rr||r,seed,13)}" fill="url(#${fill})" filter="url(#${filt})"/>`;
+  if(kind==='egg'){ g=main('gEgg','soak')+`<path d="${blob(cx-3,cy-2,r*.45,seed+2)}" fill="#f9e08a" opacity=".55" filter="url(#soak)"/>`; }
+  if(kind==='cooked'){ g=main('gCooked','rough')+`<path d="${blob(cx,cy,r*.6,seed+5)}" fill="#8a5410" opacity=".5" filter="url(#rough)"/>`;
+    for(let i=0;i<18;i++) g+=`<circle cx="${(cx-r*.7+R()*r*1.4).toFixed(1)}" cy="${(cy-r*.7+R()*r*1.4).toFixed(1)}" r="${(0.8+R()*1.6).toFixed(1)}" fill="#5a3407" opacity=".8"/>`; }
+  if(kind==='pale'){ g=main('gPale','soak'); }
+  if(kind==='rice'){ g=main('gRice','soak');
+    for(let i=0;i<10;i++){const x=cx-r*.6+R()*r*1.2,y=cy-r*.5+R()*r,a=R()*180; g+=`<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="4.2" ry="1.5" transform="rotate(${a.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="#fff7e6" stroke="#e4c48a" stroke-width=".4"/>`} }
+  if(kind==='ink'){ g=main('gInk','rough',r*.8); for(let i=0;i<9;i++){const an=R()*6.28,d=r*(1+R()*.6); g+=`<circle cx="${(cx+Math.cos(an)*d).toFixed(1)}" cy="${(cy+Math.sin(an)*d).toFixed(1)}" r="${(1+R()*2.5).toFixed(1)}" fill="#26379a" filter="url(#rough)"/>`} }
+  if(kind==='blood'){ g=main('gBlood','rough'); for(let i=0;i<6;i++){const an=R()*6.28,d=r*(1.05+R()*.5); g+=`<circle cx="${(cx+Math.cos(an)*d).toFixed(1)}" cy="${(cy+Math.sin(an)*d).toFixed(1)}" r="${(1+R()*2).toFixed(1)}" fill="#7a1d14"/>`} }
+  if(kind==='grease'){ g=main('gGrease','soak'); }
+  if(kind==='ghost'){ g=`<path d="${blob(cx,cy,r,seed,13)}" fill="#d8cfb8" opacity=".14" filter="url(#soak)"/>`; }
+  return g;
+}
 function cloth(t){
-  let g='';
-  if(t.look==='gone') g=`<circle cx="60" cy="60" r="34" fill="none" style="stroke:#9aa5a2" stroke-dasharray="4 4"/><text x="60" y="104" text-anchor="middle" style="fill:#8a9592;font-size:8px">stain was here</text>`;
-  if(t.look==='cooked'){g=`<path d="${blob(60,60,32,7)}" style="fill:var(--cooked)"/>`; const R=rng(3); for(let i=0;i<14;i++) g+=`<circle cx="${(40+R()*40).toFixed(1)}" cy="${(42+R()*36).toFixed(1)}" r="1.4" style="fill:#7a4a10"/>`;}
-  if(t.look==='pale') g=`<path d="${blob(60,60,30,11)}" style="fill:var(--pale)"/>`;
-  if(t.look==='rice'){g=`<path d="${blob(60,60,31,19)}" style="fill:var(--rice)"/>`; const R=rng(5); for(let i=0;i<9;i++){const x=44+R()*32,y=46+R()*28,a=R()*180; g+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="7" height="2.4" rx="1.2" transform="rotate(${a.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})" style="fill:#fffaf0"/>`}}
-  if(t.look==='ink') g=`<path d="${blob(62,54,22,23)}" style="fill:var(--ink-stain)"/><path d="M40,78 q6,-12 10,0 q4,12 10,0 q6,-12 10,0 q4,12 10,0" fill="none" style="stroke:var(--ink-stain)" stroke-width="2.5"/>`;
-  return `<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" fill="url(#weave)"/>${g}</svg>`;
+  const k=t.look==='gone'?'ghost':t.look;
+  return `<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" fill="#f6f4ee" filter="url(#cloth)"/><rect width="120" height="120" fill="url(#weave)" opacity=".35"/>${stainSVG(k,60,60,30,t.n*7+3)}</svg>`;
 }
 const board=$('#board');
 TESTS.forEach(t=>{
   const b=document.createElement('div');b.className='flip';b.dataset.n=t.n;b.tabIndex=0;b.setAttribute('role','button');
-  b.setAttribute('aria-label',`Test ${t.n} card. Flip to see how it was washed.`);
-  b.innerHTML=`<div class="fi"><div class="face front">${cloth(t)}<span class="t">Test ${t.n}</span><span class="d">Tap to flip</span></div>
+  b.setAttribute('aria-label',`Test ${t.n}, ${t.name}. Flip to see how it was washed.`);
+  b.innerHTML=`<div class="fi"><div class="face front">${cloth(t)}<span class="t">Test ${t.n} · ${t.name}</span><span class="d">After washing · tap to flip</span></div>
     <div class="face back"><span class="t">Test ${t.n}</span><table class="mt"><tbody>
     <tr><th>Stain</th><td>${t.stain}</td></tr><tr><th>Powder</th><td>${t.powder}</td></tr><tr><th>Temp</th><td>${t.temp} °C</td></tr>
     <tr><th>Result</th><td class="${t.res==='Removed'?'ok':'no'}">${t.res}</td></tr></tbody></table><span class="d">Tap to flip back</span></div></div>`;
@@ -777,6 +826,60 @@ const DATA=[[0,0],[10,15],[20,33],[30,62],[40,100],[50,80],[60,50],[70,22],[80,5
   g.addEventListener('click',e=>{const c=e.target.closest('.pt'); if(c) pick(c)});
   g.addEventListener('keydown',e=>{const c=e.target.closest('.pt'); if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pick(c)}});
 })();
+
+/* ---------- clean the kit game ---------- */
+const GSTAINS=[
+  {k:'egg',label:'egg',nut:'protein',enz:'protease',x:150,y:120,r:22},
+  {k:'blood',label:'blood',nut:'protein',enz:'protease',x:250,y:170,r:20},
+  {k:'grease',label:'burger grease',nut:'fat',enz:'lipase',x:162,y:248,r:24},
+  {k:'rice',label:'biryani rice',nut:'starch',enz:'amylase',x:240,y:258,r:21},
+  {k:'ink',label:'ink',nut:'a dye',enz:null,x:306,y:96,r:13}];
+S.clean=S.clean||{};
+function drawShirt(){
+  const sh=`M136,26 L176,10 Q200,36 224,10 L264,26 L360,84 L322,150 L282,128 L282,342 L118,342 L118,128 L78,150 L40,84 Z`;
+  let g=`<path d="${sh}" style="fill:var(--shirt)" stroke="rgba(0,0,0,.18)" stroke-width="2"/><path d="M176,10 Q200,48 224,10" fill="none" style="stroke:var(--shirt2)" stroke-width="7"/>
+    <path d="M118,322 H282" style="stroke:var(--shirt2)" stroke-width="7"/><text x="200" y="215" text-anchor="middle" style="fill:var(--shirt2);font-family:var(--display);font-weight:800;font-size:70px;opacity:.9">9</text>`;
+  GSTAINS.forEach((t,i)=>{
+    const done=!!S.clean[t.k];
+    g+=`<g data-stain="${t.k}"><circle cx="${t.x}" cy="${t.y}" r="${t.r+12}" fill="transparent"/>
+      <g class="gone" style="opacity:${done?0:1}">${stainSVG(t.k==='egg'?'egg':t.k,t.x,t.y,t.r,i*11+5)}</g>
+      ${done?`<circle cx="${t.x}" cy="${t.y}" r="${t.r*.9}" fill="#ffffff" opacity=".18"/><path d="M${t.x-8},${t.y} l6,6 l11,-12" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`:''}
+      <text x="${t.x}" y="${t.y+t.r+20}" text-anchor="middle" style="fill:#ffffff;font-size:12px;font-weight:700;font-family:var(--body)">${t.label}</text></g>`;
+  });
+  $('#bigShirt').innerHTML=g;
+  const n=GSTAINS.filter(t=>t.enz).length, c=GSTAINS.filter(t=>S.clean[t.k]).length;
+  $('#gameCount').textContent=`${c} of ${n} food stains cleaned`;
+}
+let picked=null;
+function tryEnzyme(enzName,stainKey){
+  const t=GSTAINS.find(x=>x.k===stainKey); if(!t) return;
+  if(S.clean[t.k]){ $('#gameMsg').textContent=`The ${t.label} stain is already clean.`; return; }
+  if(t.enz===enzName){
+    S.clean[t.k]=true; save(); drawShirt();
+    $('#gameMsg').innerHTML=`<span class="ok">It fits!</span> ${t.label[0].toUpperCase()+t.label.slice(1)} is ${t.nut}. <b>${enzName}</b> breaks ${t.nut} down, so the stain washes away.`;
+  } else {
+    const el=$(`#bigShirt [data-stain="${t.k}"] .gone`); if(el){el.classList.remove('nope'); void el.getBBox(); el.classList.add('nope');}
+    $('#gameMsg').innerHTML=t.enz?`<span class="no">No fit.</span> ${t.label[0].toUpperCase()+t.label.slice(1)} is ${t.nut}. It is the wrong shape for <b>${enzName}</b>’s active site.`
+      :`<span class="no">No enzyme fits.</span> Ink is a dye, not a protein, fat or starch, so no enzyme in the powder can break it down.`;
+  }
+}
+$$('.echip').forEach(ch=>{
+  ch.addEventListener('pointerdown',e=>{
+    e.preventDefault(); const enzName=ch.dataset.enz; let moved=false, ghost=null; const sx=e.clientX, sy=e.clientY;
+    const mv=ev=>{ if(!moved&&Math.hypot(ev.clientX-sx,ev.clientY-sy)>6){moved=true; ghost=ch.cloneNode(true); ghost.classList.add('ghostchip'); document.body.appendChild(ghost);}
+      if(ghost){ghost.style.left=ev.clientX+'px'; ghost.style.top=ev.clientY+'px';} };
+    const up=ev=>{ document.removeEventListener('pointermove',mv); document.removeEventListener('pointerup',up);
+      if(ghost){ ghost.remove(); const hit=document.elementFromPoint(ev.clientX,ev.clientY); const st=hit&&hit.closest&&hit.closest('[data-stain]');
+        if(st) tryEnzyme(enzName,st.dataset.stain); else $('#gameMsg').textContent='Drop the enzyme right on top of a stain.';
+        picked=null; $$('.echip').forEach(c=>c.setAttribute('aria-pressed','false'));
+      } else { picked=picked===enzName?null:enzName; $$('.echip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.enz===picked?'true':'false'));
+        $('#gameMsg').textContent=picked?`${picked} picked up. Now tap a stain.`:'Pick up an enzyme to start.'; } };
+    document.addEventListener('pointermove',mv); document.addEventListener('pointerup',up);
+  });
+});
+$('#bigShirt').addEventListener('click',e=>{const st=e.target.closest('[data-stain]'); if(!st) return; if(!picked){$('#gameMsg').textContent='First pick up an enzyme.';return;} tryEnzyme(picked,st.dataset.stain);});
+$('#gameReset').onclick=()=>{S.clean={};save();drawShirt();$('#gameMsg').textContent='Pick up an enzyme to start.';};
+drawShirt();
 
 /* ---------- check answers ---------- */
 const BASECK=['ck5','ck6','ck7','ck8','ck9','ck10','ck11','ck12','ck13'];
