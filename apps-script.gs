@@ -1,7 +1,7 @@
 // Ruined Kit Investigation: saves student progress to this Google Sheet.
 // 1. Change the PIN below to your own. 2. Deploy > New deployment > Web app,
 //    Execute as: Me, Who has access: Anyone. 3. Copy the web app URL.
-const PIN = 'Nawar2026';
+const PIN = 'CHANGE-ME';
 const SHEET = 'Progress';
 
 function sheet_() {
