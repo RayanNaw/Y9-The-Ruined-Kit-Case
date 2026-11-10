@@ -162,7 +162,8 @@ dl.defs dd{margin:0}
 #bigShirt .gone{transition:opacity .9s}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 #bigShirt .nope{animation:shake .35s 2;transform-box:fill-box}
-.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:620px}
+.pairs{display:flex;flex-wrap:wrap;gap:8px}
 .flip{perspective:900px;cursor:pointer;border-radius:12px}
 .fi{display:grid;transition:transform .55s;transform-style:preserve-3d;height:100%}
 .flip[aria-pressed="true"] .fi{transform:rotateY(180deg)}
@@ -416,9 +417,10 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
   <div class="card myrole" id="jobCard"></div>
 
   <div class="card">
-    <span class="eyebrow">Data Set C · Class stain tests · 30-minute wash</span>
-    <p><b>Tap a card to flip it.</b> The back shows how that cloth was washed and the result.</p>
-    <p class="boost r-more"><b>Start here:</b> flip cards 1, 2 and 3. They are all egg stains. What is different about how each one was washed?</p>
+    <span class="eyebrow">Data Set C · Egg stain tests · 30-minute wash</span>
+    <p><b>Be a fair-test detective.</b> All three cloths had the same egg stain. Flip two cards at a time and find the <b>one</b> thing that is different.</p>
+    <div class="pairs"><span class="chip"><b>Pair 1:</b>&nbsp;flip test 1 and test 3</span><span class="chip"><b>Pair 2:</b>&nbsp;flip test 1 and test 2</span></div>
+    <p class="boost r-more"><b>Tip:</b> read the backs out loud: powder, temperature, result. Which line is different?</p>
     <div class="board" id="board"></div>
     <div class="box"><button class="btn ghost" type="button" id="flipAll">Flip all cards</button></div>
     <p class="note">These are the results of this class test.</p>
@@ -428,12 +430,13 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
     <span class="eyebrow">Data Set D · Protease activity and temperature</span>
     <svg viewBox="0 0 540 290" id="graph" role="img" aria-label="Protease activity rises from 0% at 0 °C to 100% at 40 °C, then falls to 0% at 90 °C"></svg>
     <p class="readout" id="readout">Tap a point to read it.</p>
+    <p class="boost r-more"><b>B reads out:</b> the activity at 40 °C, then the activity at 90 °C.</p>
     <p class="note">Simplified class data for the protease in this powder. Other enzymes have different optimum temperatures.</p>
   </div>
 
   <div class="hints">
-    <details class="help"><summary>Hint for Q8</summary><div class="inner"><p>Flip cards 1 and 3. What is the only difference? Which powder has enzymes?</p><p class="starter">In test 1 the stain was … but in test 3 … The only difference is …</p></div></details>
-    <details class="help"><summary>Hint for Q9</summary><div class="inner"><p>Flip cards 1 and 2: only the temperature changed. Tap 40 °C and 90 °C to see what heat does to the active site.</p><div class="lk" id="lk2"></div><p class="starter">At 90 °C the enzyme is … This changes the shape of the …, so the substrate cannot …</p></div></details>
+    <details class="help"><summary>Hint for Q8</summary><div class="inner"><p>Pair 1: tests 1 and 3. Only the powder is different. Which powder has enzymes?</p><p class="starter">In test 1 the stain was … but in test 3 … The only difference is …</p></div></details>
+    <details class="help"><summary>Hint for Q9</summary><div class="inner"><p>Pair 2: tests 1 and 2. Only the temperature is different. Tap 40 °C and 90 °C to see what heat does to the active site.</p><div class="lk" id="lk2"></div><p class="starter">At 90 °C the enzyme is … This changes the shape of the …, so the substrate cannot …</p></div></details>
     <details class="help"><summary>Hint for Q10</summary><div class="inner"><p>Fastest = the highest point on the graph. Read straight down to the temperature. Then read the point at 90 °C.</p></div></details>
   </div>
   <div class="onsheet"><span>✎ On your sheet: Q8–10 and the group claim<span class="r-lead"> (and C2)</span>.</span><label class="tick"><input type="checkbox" id="done_evidence">Done</label></div>
@@ -579,9 +582,9 @@ const ROLES={
   collector:{name:'A · Evidence Collector',gets:['Hints are already open on every page.','Word bank, sentence starters and a letter frame.','The Toolkit is always available.'],
     job:['Group job: your screen is the group’s screen. Flip the cards and read the backs aloud.','Your hints are open below.']},
   analyst:{name:'B · Lab Analyst',gets:['Hints when you tap “Hint for Q…”.','A letter frame for your advice.','The Toolkit is available.'],
-    job:['Group job: check every answer has a key word and a test number.','Tap a hint only if you are stuck.']},
+    job:['Group job: read the graph. Say the activity at 40 °C and at 90 °C out loud.','Tap a hint only if you are stuck.']},
   lead:{name:'C · Lead Investigator',gets:['No hints: work from the evidence only.','Write your letter in your own words.','Extra C questions on your sheet.'],
-    job:['Group job: ask “How do you know?” and share the group claim.','No hints: use only the data. Then do C2 on your sheet.']}};
+    job:['Group job: ask “How do you know?” at every step, then say the group claim to the class.','No hints: use only the data. Then do C2 on your sheet.']}};
 const KEY='ruined-kit-v3';
 let S={};
 try{S=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){S={}}
@@ -773,10 +776,7 @@ const TESTS=[
  {n:1,stain:'Egg',name:'Egg stain',powder:'Bio',temp:40,res:'Removed',look:'gone'},
  {n:2,stain:'Egg',name:'Egg stain',powder:'Bio',temp:90,res:'Stained',look:'cooked'},
  {n:3,stain:'Egg',name:'Egg stain',powder:'Non-bio (no enzymes)',temp:40,res:'Stained',look:'pale'},
- {n:4,stain:'Grease',name:'Grease stain',powder:'Bio',temp:40,res:'Removed',look:'gone'},
- {n:5,stain:'Rice (starch)',name:'Rice stain',powder:'Bio',temp:40,res:'Removed',look:'gone'},
- {n:6,stain:'Rice (starch)',name:'Rice stain',powder:'Protease only',temp:40,res:'Stained',look:'rice'},
- {n:7,stain:'Ink',name:'Ink stain',powder:'Bio',temp:40,res:'Stained',look:'ink'}];
+];
 function stainSVG(kind,cx,cy,r,seed){
   const R=rng(seed); let g='';
   const main=(fill,filt,rr)=>`<path d="${blob(cx,cy,rr||r,seed,13)}" fill="url(#${fill})" filter="url(#${filt})"/>`;
