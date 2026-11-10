@@ -83,8 +83,12 @@ main{padding-block:22px 40px}
 .reveal{background:var(--soft);border-radius:12px;padding:14px;display:grid;gap:10px}
 .tick{display:flex;gap:10px;align-items:flex-start}
 .tick input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--accent)}
-input[type=number],input[type=text],select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;background:var(--field);color:var(--ink)}
-input:focus,select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--soft)}
+textarea,input[type=number],input[type=text],select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;background:var(--field);color:var(--ink)}
+textarea:focus,input:focus,select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--soft)}
+.q{display:grid;gap:8px}
+.q > label{font-weight:700}
+.qn{display:inline-grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:.85rem;margin-right:6px}
+textarea{min-height:78px;resize:vertical}
 .who{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
 .who label{display:grid;gap:4px;font-weight:700}
 
@@ -290,7 +294,7 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
 <main class="wrap">
 
 <section class="stage" data-stage="mystery">
-  <div class="head"><span class="eyebrow">The mystery · solve alone · 4 min</span><h2>Same powder. Different result.</h2></div>
+  <div class="head"><span class="eyebrow">The mystery · solve alone</span><h2>Same powder. Different result.</h2></div>
   <div class="card">
     <div class="who">
       <label for="sname">My name<input type="text" id="sname" autocomplete="off"></label>
@@ -342,7 +346,7 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
 </section>
 
 <section class="stage" data-stage="discover" hidden>
-  <div class="head"><span class="eyebrow">Discover · alone, then with a partner · 10 min</span><h2>What is an enzyme?</h2></div>
+  <div class="head"><span class="eyebrow">Discover · alone, then with a partner</span><h2>What is an enzyme?</h2></div>
   <div class="card">
     <p class="big">An <b>enzyme</b> is a <b>protein</b> that <b>speeds up</b> a chemical reaction without being used up. Enzymes are <b>biological catalysts</b>.</p>
     <div class="facts">
@@ -412,7 +416,7 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
 </section>
 
 <section class="stage" data-stage="evidence" hidden>
-  <div class="head"><span class="eyebrow">Evidence · your group · 9 min</span><h2>The evidence investigation</h2>
+  <div class="head"><span class="eyebrow">Evidence · your group</span><h2>The evidence investigation</h2>
     <p class="muted">Share one screen in your group: A’s screen. Discuss together. Everyone writes on their own sheet.</p></div>
   <div class="card myrole" id="jobCard"></div>
 
@@ -443,7 +447,7 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
 </section>
 
 <section class="stage" data-stage="advice" hidden>
-  <div class="head"><span class="eyebrow">Advice to Omar · alone · 4 min</span><h2>Final advice to Omar</h2>
+  <div class="head"><span class="eyebrow">Advice to Omar · alone</span><h2>Final advice to Omar</h2>
     <p class="muted">Write your letter on your sheet (Q11). Use this page to plan it.</p></div>
   <div class="card">
     <span class="eyebrow">A strong letter includes</span>
@@ -465,10 +469,11 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
   <p class="boost r-more"><b>Sentence starter:</b> At 90 °C the enzyme is … This changes the shape of the …, so the substrate cannot …</p>
   <p class="boost r-lead"><b>C:</b> no frame for you. Write the letter in your own words, using every point in the list above.</p>
   <div class="onsheet"><span>✎ Write your letter on your sheet: Q11.</span><label class="tick"><input type="checkbox" id="done_advice">Done</label></div>
+  <p class="muted">Finished? Go to <b>5 Check answers</b>.</p>
 </section>
 
 <section class="stage" data-stage="extend" hidden>
-  <div class="head"><span class="eyebrow">Extend · alone · 3 min</span><h2>A new problem</h2></div>
+  <div class="head"><span class="eyebrow">Extend · alone · on the site</span><h2>A new problem</h2></div>
   <div class="card">
     <div class="box">
       <svg viewBox="0 0 220 110" width="220" role="img" aria-label="A milk carton and lactase tablets" style="max-width:100%;height:auto">
@@ -481,12 +486,24 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
       <p style="flex:1;min-width:220px">Lactase tablets help people digest milk. <b>Lactase</b> is an enzyme that breaks down <b>lactose</b>, a sugar found in milk.</p>
     </div>
   </div>
-  <div class="hints">
-    <details class="help"><summary>Hint for Q12</summary><div class="inner"><p class="starter">The enzyme is … and the substrate is …</p></div></details>
-    <details class="help"><summary>Hint for Q13</summary><div class="inner"><p>What happened to the protease at 90 °C? Boiling is even hotter.</p><p class="starter">Boiling tea … the lactase. Its active site … so lactose …</p></div></details>
+  <div class="card">
+    <p class="small muted">Answer here on the site. These questions are not on your sheet.</p>
+    <div class="q"><label for="ex1t"><span class="qn">1</span>Identify the enzyme and the substrate.</label>
+      <details class="help"><summary>Hint</summary><div class="inner"><p class="starter">The enzyme is … and the substrate is …</p></div></details>
+      <textarea id="ex1t"></textarea></div>
+    <div class="q"><label for="ex2t"><span class="qn">2</span>Explain why lactase should not be mixed with boiling tea.</label>
+      <details class="help"><summary>Hint</summary><div class="inner"><p>What happened to the protease at 90 °C? Boiling is even hotter.</p><p class="starter">Boiling tea … the lactase. Its active site … so lactose …</p></div></details>
+      <textarea id="ex2t"></textarea></div>
+    <div class="q r-lead"><label for="ex3t"><span class="qn">C</span>Would lactase help digest the protein in milk? Explain using the lock and key model.</label><textarea id="ex3t"></textarea></div>
+    <button class="btn" type="button" id="exMark">Show answers</button>
+    <div class="reveal" id="exReveal" hidden>
+      <p class="small muted">Tick each answer you got right.</p>
+      <label class="tick"><input type="checkbox" id="xo1"><span><b>1</b> Enzyme: lactase. Substrate: lactose.</span></label>
+      <label class="tick"><input type="checkbox" id="xo2"><span><b>2</b> Boiling denatures lactase: its active site changes shape, so lactose no longer fits and is not broken down.</span></label>
+      <label class="tick r-lead"><input type="checkbox" id="xoC"><span><b>C</b> No. Enzymes are specific: protein is the wrong shape to fit lactase’s active site. Milk protein needs protease.</span></label>
+      <div class="box"><span class="score"><span id="exScore">0</span> / <span id="exTotal">2</span></span></div>
+    </div>
   </div>
-  <div class="onsheet"><span>✎ On your sheet: Q12–13<span class="r-lead"> (and C3)</span>.</span><label class="tick"><input type="checkbox" id="done_extend">Done</label></div>
-  <p class="muted">Finished every stage? Go to <b>6 Check answers</b>.</p>
 </section>
 
 <section class="stage" data-stage="check" hidden>
@@ -530,15 +547,7 @@ th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
       <h3>Advice to Omar</h3>
       <label class="tick"><input type="checkbox" id="ck11"><span><b>Q11</b> Model letter: Your kit stayed stained because the enzymes stopped working. Biological powder contains protease, which breaks down the protein in egg and blood stains. At 90 °C the enzyme is denatured: its active site changes shape, so the protein no longer fits. I recommend washing the kit at 40 °C, because test 1 and the graph show protease works fastest at 40 °C (100%) and has 0% activity at 90 °C. <span class="muted">Tick if yours has all four points.</span></span></label>
     </div>
-    <div class="card">
-      <h3>Extend</h3>
-      <div class="ckgroup">
-        <label class="tick"><input type="checkbox" id="ck12"><span><b>Q12</b> Enzyme: lactase. Substrate: lactose.</span></label>
-        <label class="tick"><input type="checkbox" id="ck13"><span><b>Q13</b> Boiling denatures lactase: its active site changes shape, so lactose no longer fits and is not broken down.</span></label>
-        <label class="tick r-lead"><input type="checkbox" id="ckC3"><span><b>C3</b> No. Enzymes are specific: protein is the wrong shape to fit lactase’s active site. Milk protein needs protease.</span></label>
-      </div>
-    </div>
-    <div class="card"><div class="box"><span class="score"><span id="ckScore">0</span> / <span id="ckTotal">9</span></span><span class="muted">Now finish the reflection at the end of your sheet.</span></div></div>
+    <div class="card"><div class="box"><span class="score"><span id="ckScore">0</span> / <span id="ckTotal">7</span></span><span class="muted">Now finish the reflection at the end of your sheet, then go to <b>6 Extend</b>.</span></div></div>
   </div>
 </section>
 
@@ -576,8 +585,8 @@ const STAGES=[
   {id:'discover',label:'Discover'},
   {id:'evidence',label:'Evidence'},
   {id:'advice',label:'Advice to Omar'},
-  {id:'extend',label:'Extend'},
-  {id:'check',label:'Check answers'}];
+  {id:'check',label:'Check answers'},
+  {id:'extend',label:'Extend'}];
 const ROLES={
   collector:{name:'A · Evidence Collector',gets:['Hints are already open on every page.','Word bank, sentence starters and a letter frame.','The Toolkit is always available.'],
     job:['Group job: your screen is the group’s screen. Flip the cards and read the backs aloud.','Your hints are open below.']},
@@ -594,12 +603,12 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const dnTotal=f=>[1,2,3,4].filter(n=>f['dn'+n]).length;
 const roleFor=n=>n<=1?'collector':n<=3?'analyst':'lead';
 function myRole(){ return S.roleOverride || (S.dnShown?roleFor(dnTotal(S.f)):null); }
-const DONE=['discover','evidence','advice','extend'];
+const DONE=['discover','evidence','advice'];
 const unlocked=()=>!!S.dnShown && DONE.every(k=>S.f['done_'+k]);
 let syncT=null;
 function queueSync(now){ if(!SYNC_URL) return; clearTimeout(syncT); syncT=setTimeout(sync,now?200:2500); }
 function sync(){
-  const body=JSON.stringify({id:S.id,name:S.f.sname||'',cls:S.f.sclass||'',role:myRole()||'',stage:S.max||1,cur:cur,dnShown:!!S.dnShown,f:S.f});
+  const body=JSON.stringify({id:S.id,name:S.f.sname||'',cls:S.f.sclass||'',role:myRole()||'',stage:S.max||1,cur:cur,dnShown:!!S.dnShown,exShown:!!S.exShown,f:S.f});
   try{ fetch(SYNC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body}).catch(()=>{}); }catch(e){}
 }
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){} queueSync()};
@@ -702,7 +711,7 @@ $('#drawerClose').onclick=()=>{$('#drawer').hidden=true};
 document.addEventListener('keydown',e=>{if(e.key==='Escape') $('#drawer').hidden=true});
 
 /* ---------- form persistence ---------- */
-$$('main input, main select').forEach(el=>{
+$$('main input, main select, main textarea').forEach(el=>{
   if(!el.id || el.hasAttribute('data-nosave')) return;
   const v=S.f[el.id];
   if(v!==undefined){ if(el.type==='checkbox') el.checked=!!v; else el.value=v; }
@@ -735,6 +744,7 @@ function applyRole(){
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-setrole]'); if(!b) return; S.roleOverride=b.dataset.setrole; save(); update();});
 $('#dnMark').onclick=()=>{S.dnShown=true;save();update()};
+$('#exMark').onclick=()=>{S.exShown=true;save();update()};
 
 /* ---------- lock & key ---------- */
 const ENZ='M40,150 Q40,110 80,110 L120,110 L130,140 L150,140 L160,110 L200,110 Q240,110 240,150 L240,190 Q240,222 200,222 L80,222 Q40,222 40,190 Z';
@@ -882,10 +892,10 @@ $('#gameReset').onclick=()=>{S.clean={};save();drawShirt();$('#gameMsg').textCon
 drawShirt();
 
 /* ---------- check answers ---------- */
-const BASECK=['ck5','ck6','ck7','ck8','ck9','ck10','ck11','ck12','ck13'];
-const LEADCK=['ck5','ck6','ck7','ckC1','ck8','ck9','ck10','ckC2','ck11','ck12','ck13','ckC3'];
+const BASECK=['ck5','ck6','ck7','ck8','ck9','ck10','ck11'];
+const LEADCK=['ck5','ck6','ck7','ckC1','ck8','ck9','ck10','ckC2','ck11'];
 const ckList=role=>role==='lead'?LEADCK:BASECK;
-const LABEL={discover:'Discover (Q5–7)',evidence:'Evidence (Q8–10, group claim)',advice:'Advice to Omar (Q11)',extend:'Extend (Q12–13)'};
+const LABEL={discover:'Discover (Q5–7)',evidence:'Evidence (Q8–10, group claim)',advice:'Advice to Omar (Q11)'};
 
 /* ---------- render ---------- */
 function update(){
@@ -906,6 +916,8 @@ function update(){
   const o=S.f.opt,a9=S.f.at90;
   $('#optFb').innerHTML=o===undefined||o===''?'':(+o===40?'<span class="ok">✓</span>':'<span class="no">✗ find the peak</span>');
   $('#at90Fb').innerHTML=a9===undefined||a9===''?'':(+a9===0?'<span class="ok">✓</span>':'<span class="no">✗ read the last point</span>');
+  const exL=(myRole()==='lead')?['xo1','xo2','xoC']:['xo1','xo2'];
+  $('#exReveal').hidden=!S.exShown; $('#exScore').textContent=exL.filter(k=>S.f[k]).length; $('#exTotal').textContent=exL.length;
   const list=ckList(myRole()||'analyst');
   $('#ckScore').textContent=list.filter(k=>S.f[k]).length; $('#ckTotal').textContent=list.length;
 }
@@ -921,7 +933,8 @@ function calc(d){
   const graph=(f.opt!==undefined&&f.opt!==''&&+f.opt===40?1:0)+(f.at90!==undefined&&f.at90!==''&&+f.at90===0?1:0);
   const stages=DONE.filter(k=>f['done_'+k]).length;
   const list=ckList(d.role);
-  return {match,graph,stages,ck:list.filter(k=>f[k]).length,ckn:list.length,open:!!d.dnShown&&stages===4,dn:dnTotal(f),list};
+  const exL=d.role==='lead'?['xo1','xo2','xoC']:['xo1','xo2'];
+  return {match,graph,stages,ck:list.filter(k=>f[k]).length,ckn:list.length,open:!!d.dnShown&&stages===DONE.length,dn:dnTotal(f),list,ex:d.exShown?exL.filter(k=>f[k]).length:null,exn:exL.length};
 }
 function ago(t){ const s=Math.round((Date.now()-new Date(t).getTime())/1000); if(!isFinite(s)) return '–'; if(s<60) return 'just now'; if(s<3600) return Math.round(s/60)+' min ago'; return Math.round(s/3600)+' h ago'; }
 function renderTeacher(){
@@ -935,14 +948,14 @@ function renderTeacher(){
   $('#tStats').innerHTML=[[n,'students'],[live,'active in last 3 min'],[avg(rows.filter(r=>r.dnShown).map(r=>dnTotal(r.f||{})))+' / 4','Do Now average'],
     ['A '+rows.filter(r=>r.role==='collector').length+' · B '+rows.filter(r=>r.role==='analyst').length+' · C '+rows.filter(r=>r.role==='lead').length,'roles'],
     [C.filter(c=>c.open).length,'reached Check answers']].map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
-  const head='<thead><tr><th>Student</th><th>Class</th><th>Do Now</th><th>Role</th><th>Progress</th><th>Stages done</th><th>Check score</th><th>Enzyme table</th><th>Graph</th><th>Last seen</th></tr></thead>';
+  const head='<thead><tr><th>Student</th><th>Class</th><th>Do Now</th><th>Role</th><th>Progress</th><th>Stages done</th><th>Check score</th><th>Enzyme table</th><th>Graph</th><th>Extend</th><th>Last seen</th></tr></thead>';
   const body=rows.map((r,i)=>{const c=C[i],st=r.stage||1,curI=STAGES.findIndex(s=>s.id===r.cur)+1,isLive=Date.now()-new Date(r.updated).getTime()<180000;
     return `<tr data-id="${esc(r.id)}" aria-selected="${tSel===r.id}"><td>${isLive?'<i class="live" title="Active"></i>':''}<b>${esc(r.name||'(no name)')}</b></td><td>${esc(r.cls)}</td>
     <td>${r.dnShown?c.dn+' / 4':'–'}</td><td>${RN[r.role]||'–'}</td>
     <td><span class="prog6" title="Reached stage ${st}">${STAGES.map((s,k)=>`<i class="${k+1===curI?'now':k<st?'on':''}"></i>`).join('')}</span></td>
-    <td class="${c.stages===4?'ok':''}">${c.stages} / 4</td><td>${c.open?c.ck+' / '+c.ckn:'locked'}</td>
-    <td class="${c.match===3?'ok':''}">${c.open?c.match+' / 3':'–'}</td><td class="${c.graph===2?'ok':''}">${c.open?c.graph+' / 2':'–'}</td><td class="muted">${ago(r.updated)}</td></tr>`}).join('');
-  $('#tTable').innerHTML=head+'<tbody>'+(body||'<tr><td colspan="10" class="muted">No students yet. They appear once they type their name.</td></tr>')+'</tbody>';
+    <td class="${c.stages===DONE.length?'ok':''}">${c.stages} / ${DONE.length}</td><td>${c.open?c.ck+' / '+c.ckn:'locked'}</td>
+    <td class="${c.match===3?'ok':''}">${c.open?c.match+' / 3':'–'}</td><td class="${c.graph===2?'ok':''}">${c.open?c.graph+' / 2':'–'}</td><td>${c.ex===null?'–':c.ex+' / '+c.exn}</td><td class="muted">${ago(r.updated)}</td></tr>`}).join('');
+  $('#tTable').innerHTML=head+'<tbody>'+(body||'<tr><td colspan="11" class="muted">No students yet. They appear once they type their name.</td></tr>')+'</tbody>';
   const sel=rows.find(r=>r.id===tSel);
   $('#tDetail').hidden=!sel;
   if(sel){ const f=sel.f||{}, c=calc(sel);
@@ -951,7 +964,9 @@ function renderTeacher(){
       `<div><span>Stages ticked done</span><p>${DONE.map(k=>LABEL[k]+(f['done_'+k]?' ✓':' –')).join(' · ')}</p></div>`+
       `<div><span>Check answers (self-marked)</span><p>${c.open?c.list.map(k=>k.replace('ckC','C').replace('ck','Q')+(f[k]?' ✓':' ✗')).join(' · '):'Locked'}</p></div>`+
       `<div><span>Enzyme table</span><p>Egg: ${esc(f.x1||'–')} · Grease: ${esc(f.x2||'–')} · Rice: ${esc(f.x3||'–')}</p></div>`+
-      `<div><span>Graph</span><p>Fastest at ${esc(f.opt||'–')} °C · Activity at 90 °C: ${esc(f.at90||'–')} %</p></div></div>`; }
+      `<div><span>Graph</span><p>Fastest at ${esc(f.opt||'–')} °C · Activity at 90 °C: ${esc(f.at90||'–')} %</p></div>`+
+      [['ex1t','Extend 1'],['ex2t','Extend 2'],['ex3t','Extend C']].filter(([k])=>(f[k]||'').trim()).map(([k,l])=>`<div><span>${l}</span><p>${esc(f[k])}</p></div>`).join('')+
+      `<div><span>Extend score (self-marked)</span><p>${c.ex===null?'Not marked yet':c.ex+' / '+c.exn}</p></div></div>`; }
 }
 function loadTeacher(){
   if(!SYNC_URL||!tPin) return;
