@@ -430,7 +430,6 @@ ol.dn li{padding-left:4px}
     </div>
     <p class="boost r-more"><b>Picture it:</b> an enzyme is like a tool that cuts a big molecule into small pieces. After cutting, the tool is still there, ready to cut the next one. Your stomach uses the enzyme <b>protease</b> to break down the protein in egg. Bio powder uses the same enzyme on egg stains.</p>
     <div class="q"><span class="qt">In your own words, what is an enzyme?</span><div class="onsheet" data-q="7" id="slot7"></div></div>
-    <div class="q r-lead"><label for="d0">Think further: why is it useful that the enzymes in washing powder are not used up?</label><textarea id="d0"></textarea></div>
   </div>
   <div class="card">
     <span class="eyebrow">Enzymes you already use</span>
@@ -766,7 +765,7 @@ $$('.boxArt').forEach(el=>el.innerHTML=powderBox());
 
 /* ---------- form persistence ---------- */
 /* ---------- written answers go on the paper sheet ---------- */
-const SHEETQ={d0:'C1',d1:'6',t1:'7',t1b:'C2',e1:'8',e2:'9',e3:'10',ch1:'C3',b0:'11',x_1:'12',x_2:'13',x_3:'C4'};
+const SHEETQ={d1:'6',t1:'7',t1b:'C1',e1:'8',e2:'9',e3:'10',ch1:'C2',b0:'11',x_1:'12',x_2:'13',x_3:'C3'};
 const qName=q=>q.startsWith('C')?q:'Q'+q;
 function marker(id,q){const d=document.createElement('div');d.className='onsheet';
   d.innerHTML=`<span>✎ Write on your sheet · <b>${qName(q)}</b></span><label class="tick"><input type="checkbox" id="done_${id}">Done</label>`;return d;}
@@ -999,7 +998,7 @@ let tRows=[], tTimer=null, tPin='', tSel=null;
 try{tPin=sessionStorage.getItem('rk-pin')||''}catch(e){}
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const BASEQ=[['d7','5'],['d1','6'],['t1','7'],['e1','8'],['e2','9'],['e3','10'],['letter','11'],['x_1','12'],['x_2','13']];
-const LEADQ=[['d7','5'],['d0','C1'],['d1','6'],['t1','7'],['t1b','C2'],['e1','8'],['e2','9'],['e3','10'],['ch1','C3'],['b0','11'],['x_1','12'],['x_2','13'],['x_3','C4']];
+const LEADQ=[['d7','5'],['d1','6'],['t1','7'],['t1b','C1'],['e1','8'],['e2','9'],['e3','10'],['ch1','C2'],['b0','11'],['x_1','12'],['x_2','13'],['x_3','C3']];
 function calc(d){
   const f=d.f||{};
   const match=['protease','lipase','amylase'].filter((e,i)=>f['x'+(i+1)]===e).length;
