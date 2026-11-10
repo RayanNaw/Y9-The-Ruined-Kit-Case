@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
 <style>
 html,body{margin:0}
-/* Layout: one lesson stage per screen, like pages of a lab notebook; stage chips, key question and timer pinned on top; toolkit slides in from the side */
+/* Layout: one lesson stage per screen like pages of a lab notebook; the site is the information, the paper sheet is where students write */
 :root{
   --bg:#eef4f5; --surface:#ffffff; --field:#fbfdfd; --ink:#10262b; --muted:#4f6569; --line:#cfdfe2;
   --accent:#0b7a75; --accent-ink:#ffffff; --soft:#dff0ef;
@@ -46,7 +46,6 @@ p{margin:0}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 
-/* header */
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
 .bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px 6px}
 .brand{display:flex;flex-direction:column;min-width:0}
@@ -55,19 +54,12 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;backgroun
 .right{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .tool-btn{border:1.5px solid var(--accent);background:transparent;color:var(--accent);border-radius:99px;padding:4px 12px;font-weight:700;font-size:.88rem}
 .tool-btn:disabled{border-color:var(--line);color:var(--muted);cursor:not-allowed}
-.timer{display:flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:99px;padding:3px 4px 3px 12px}
-.timer output{font-variant-numeric:tabular-nums;font-weight:700;min-width:3.2em}
-.timer.done output{color:var(--bad)}
-.timer button{border:0;background:var(--soft);color:var(--accent);border-radius:99px;padding:3px 10px;font-size:.85rem;font-weight:700}
 .kq{font-size:.9rem;padding-block:0 6px;color:var(--muted)}
 .kq b{color:var(--ink)}
 nav.stages{display:flex;gap:6px;overflow-x:auto;padding-block:0 10px}
 nav.stages button{flex:none;border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:5px 12px;font-size:.88rem;white-space:nowrap}
-nav.stages button small{color:var(--muted);margin-left:4px;font-variant-numeric:tabular-nums}
 nav.stages button[aria-current="step"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-nav.stages button[aria-current="step"] small{color:inherit;opacity:.8}
 
-/* stage */
 main{padding-block:22px 40px}
 .stage{display:grid;gap:18px}
 .head{display:grid;gap:4px}
@@ -77,39 +69,28 @@ main{padding-block:22px 40px}
 .muted{color:var(--muted)}
 .small{font-size:.88rem}
 .note{font-size:.85rem;color:var(--muted)}
-
-/* mystery */
-.kits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end}
-.fileb{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
-.fileb svg{width:100%;height:auto}
-@media (max-width:520px){.fileb{grid-template-columns:1fr}.fileb > span{max-width:120px}}
-.kit{display:grid;gap:4px;justify-items:center;text-align:center}
-.kit svg{width:100%;max-width:190px;height:auto}
-.kit b{font-family:var(--display);font-size:1.1rem}
-.kit .t{font-size:1.4rem;font-family:var(--display);font-weight:800}
-.kit .bad{color:var(--bad)} .kit .good{color:var(--good)}
-.email blockquote{margin:0;font-size:1.12rem;line-height:1.45}
+.box{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:.88rem;background:var(--bg)}
 .dot{width:10px;height:10px;border-radius:50%;flex:none}
-.sure{display:flex;gap:6px;flex-wrap:wrap}
-.sure label{display:inline-flex;gap:6px;align-items:center;border:1.5px solid var(--line);border-radius:99px;padding:4px 12px;font-size:.9rem;cursor:pointer}
-.sure label:has(input:checked){border-color:var(--accent);background:var(--soft)}
-.sure input{accent-color:var(--accent)}
-.li{display:grid;gap:6px}
-.sc{display:grid;gap:4px;margin:0;padding:0;list-style:none}
-.sc li{display:flex;gap:10px;font-size:.95rem}
-.sc li::before{content:"";width:14px;height:14px;border:2px solid var(--accent);border-radius:4px;flex:none;margin-top:5px}
+.big{font-size:1.15rem;line-height:1.5}
+.ok{color:var(--good);font-weight:700}
+.no{color:var(--bad);font-weight:700}
+.score{font-family:var(--display);font-weight:800;font-size:1.6rem;font-variant-numeric:tabular-nums}
 
-/* questions */
-.q{display:grid;gap:8px}
-.q > label, .qt{font-weight:700}
-.qn{display:inline-grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:.85rem;margin-right:6px}
-textarea,input[type=number],input[type=text],select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;background:var(--field);color:var(--ink)}
-textarea{min-height:78px;resize:vertical}
-textarea:focus,input:focus,select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--soft)}
-.selects{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
-.selects label{display:grid;gap:4px;font-size:.9rem;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;justify-self:start;border:0;border-radius:10px;padding:10px 18px;font-weight:700;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.reveal{background:var(--soft);border-radius:12px;padding:14px;display:grid;gap:10px}
+.tick{display:flex;gap:10px;align-items:flex-start}
+.tick input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--accent)}
+input[type=number],input[type=text],select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;background:var(--field);color:var(--ink)}
+input:focus,select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--soft)}
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.who label{display:grid;gap:4px;font-weight:700}
+
+.onsheet{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border:1.5px dashed var(--accent);border-radius:12px;padding:12px 14px;background:var(--field)}
+.onsheet > span{font-weight:700;color:var(--accent);font-size:1.02rem}
+.onsheet .tick{align-items:center;font-weight:700}
 
 details.help{border-radius:10px;background:var(--stain-soft);padding:6px 12px}
 details.help > summary{cursor:pointer;font-weight:700;color:var(--stain);font-size:.92rem;list-style:none}
@@ -117,131 +98,58 @@ details.help > summary::-webkit-details-marker{display:none}
 details.help > summary::before{content:"+ "}
 details.help[open] > summary::before{content:"– "}
 details.help .inner{display:grid;gap:6px;padding-block:6px 4px;font-size:.95rem}
-details.check{border:1px dashed var(--accent);border-radius:10px;padding:6px 12px}
-details.check > summary{cursor:pointer;font-weight:700;color:var(--accent);font-size:.92rem}
-details.check p{margin-top:6px}
 .starter{font-style:italic}
+.boost{background:var(--stain-soft);border-radius:10px;padding:10px 12px;font-size:.95rem}
+.boost b{color:var(--stain)}
+.hints{display:grid;gap:8px}
 
-.btn{display:inline-flex;align-items:center;gap:8px;justify-self:start;border:0;border-radius:10px;padding:10px 18px;font-weight:700;background:var(--accent);color:var(--accent-ink)}
-.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
-.say{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:3px 10px;font-size:.82rem;display:inline-flex;gap:6px;align-items:center;justify-self:start}
-.say svg{width:15px;height:15px}
-.reveal{background:var(--soft);border-radius:12px;padding:14px;display:grid;gap:10px}
-.tick{display:flex;gap:10px;align-items:flex-start}
-.tick input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--accent)}
-.score{font-family:var(--display);font-weight:800;font-size:1.6rem;font-variant-numeric:tabular-nums}
-.ok{color:var(--good);font-weight:700}
-.no{color:var(--bad);font-weight:700}
-.challenge{border:2px solid var(--stain)}
-.challenge .eyebrow{color:var(--stain)}
-.box{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-
-/* lock & key */
-.lk svg{width:100%;max-width:340px;height:auto;justify-self:center}
-.lk .steps{display:flex;flex-wrap:wrap;gap:6px}
-.lk .steps button{border:1.5px solid var(--line);background:var(--bg);border-radius:99px;padding:4px 12px;font-size:.88rem}
-.lk .steps button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
-.lk .cap{min-height:3em;font-weight:700}
-.part{transition:transform .6s cubic-bezier(.4,1.4,.5,1),opacity .4s;transform-box:view-box}
-@media (prefers-reduced-motion: reduce){.part{transition:none}}
-dl.defs{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:0;font-size:.95rem}
-dl.defs dt{font-weight:700}
-dl.defs dd{margin:0}
-.talk{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.talk output{font-family:var(--display);font-weight:800;font-size:1.4rem;font-variant-numeric:tabular-nums;min-width:2.5em}
-
-.tbl{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.95rem}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
-th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-td select{min-width:130px;padding:6px 10px}
-.enz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:8px}
-.enz div{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);display:grid;gap:2px}
-.enz b{font-family:var(--display);font-size:1.05rem}
-
-/* evidence */
-.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-.sq{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:6px;text-align:left;display:grid;gap:4px}
-.sq svg{width:100%;height:auto;border-radius:6px;display:block}
-.sq .t{font-family:var(--display);font-weight:800}
-.sq .d{font-size:.78rem;color:var(--muted);line-height:1.3}
-.sq .r{font-size:.82rem;font-weight:700}
-.sq .r.removed{color:var(--good)} .sq .r.stained{color:var(--bad)}
-.sq[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px var(--soft)}
-.compare{border-radius:12px;background:var(--soft);padding:14px;display:grid;gap:8px}
-.diff{color:var(--stain);font-weight:700}
-.graph svg{width:100%;height:auto}
-.graph .pt{cursor:pointer}
-.graph text{fill:var(--muted);font-size:12px;font-family:var(--body)}
-.readout{font-weight:700;min-height:1.5em}
-.mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
-.mini label{display:grid;gap:4px;font-weight:700}
-.mini .row{display:flex;gap:8px;align-items:center}
-.mini input{max-width:110px}
-.roles{display:flex;flex-wrap:wrap;gap:6px}
-.roles button{border:1.5px solid var(--line);background:var(--bg);border-radius:99px;padding:4px 12px;font-size:.88rem}
-.roles button[aria-pressed="true"]{border-color:var(--accent);background:var(--soft);font-weight:700}
-
-/* advice letter */
-.letter{background:var(--field);border:1.5px solid var(--line);border-radius:14px;padding:20px;font-size:1.08rem;line-height:2.4}
-.letter .from{font-family:var(--display);font-weight:800;font-size:1rem;color:var(--accent);line-height:1.3;margin-bottom:6px}
-.letter input{display:inline-block;width:auto;min-width:6ch;padding:2px 8px;border-radius:6px;border-width:0 0 2px;background:var(--soft);line-height:1.6}
-.meter{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.meter .pips{display:flex;gap:4px}
-.meter .pips i{width:22px;height:10px;border-radius:4px;background:var(--line)}
-.meter .pips i.on{background:var(--good)}
-.found{display:flex;flex-wrap:wrap;gap:4px}
-.found span{font-size:.8rem;padding:1px 8px;border-radius:99px;background:var(--good-soft);color:var(--good);font-weight:700}
-
-/* then & now */
-.tn{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
-.tn > div{border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start}
-.tn .then{background:var(--bg);border:1px dashed var(--line)}
-.tn .now{background:var(--good-soft)}
-.tn p{white-space:pre-wrap}
-.tlrow{display:grid;gap:6px}
-.tlopts{display:flex;gap:6px;flex-wrap:wrap}
-.tlopts label{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:99px;padding:4px 12px;font-size:.9rem;cursor:pointer}
-.tlopts input{accent-color:var(--accent)}
-.tlopts label:has(input:checked){border-color:var(--accent);background:var(--soft)}
-.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-
-/* toolkit drawer */
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);border-left:1px solid var(--line);z-index:40;overflow-y:auto;
-  padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 18px;display:grid;gap:14px;align-content:start;box-shadow:-12px 0 30px rgba(0,0,0,.15)}
-.drawer .dh{display:flex;justify-content:space-between;align-items:center}
-.team{display:grid;gap:8px}
-.team div{border-radius:10px;background:var(--bg);padding:10px;display:grid;gap:2px}
-.team b{font-family:var(--display)}
-.drawer ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
-
-/* roles: Evidence Collector = most support, Lab Analyst = some, Lead Investigator = least */
 body:not([data-role="collector"]) .r-more{display:none}
 body[data-role="lead"] .r-mid{display:none}
 body:not([data-role="lead"]) .r-lead{display:none}
 body[data-role="lead"] details.help{display:none}
 .rolecards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
 .rolec{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:14px;text-align:left;display:grid;gap:4px}
-.rolec b{font-family:var(--display);font-size:1.15rem}
-.rolec span{font-size:.9rem;color:var(--muted)}
+.rolec b{font-family:var(--display);font-size:1.05rem}
 .rolec[aria-pressed="true"]{border-color:var(--accent);background:var(--soft)}
-.rolenow{border:2px solid var(--accent);background:var(--soft)}
-.rolenow ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
-.big{font-size:1.15rem;line-height:1.5}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:8px}
+.myrole{border:2px solid var(--accent);background:var(--soft)}
+.myrole .name{font-family:var(--display);font-weight:800;font-size:1.6rem}
+.myrole ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+
+.kits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end}
+.kit{display:grid;gap:4px;justify-items:center;text-align:center}
+.kit svg{width:100%;max-width:190px;height:auto}
+.kit b{font-family:var(--display);font-size:1.1rem}
+.kit .t{font-size:1.4rem;font-family:var(--display);font-weight:800}
+.kit .bad{color:var(--bad)} .kit .good{color:var(--good)}
+.email blockquote{margin:0;font-size:1.12rem;line-height:1.45}
+.sc{display:grid;gap:4px;margin:0;padding-left:1.2em}
+
+.facts,.meet{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
 .facts div{border-radius:10px;background:var(--bg);border:1px solid var(--line);padding:10px 12px;display:grid;gap:2px}
 .facts b{font-family:var(--display)}
-.boost{background:var(--stain-soft);border-radius:10px;padding:10px 12px;font-size:.95rem}
-.boost b{color:var(--stain)}
-
-.meet{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
 .meet figure{margin:0;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:10px;display:grid;gap:6px;align-content:start}
-.meet svg{width:100%;height:auto;max-height:120px}
+.meet svg{width:100%;height:auto}
+.meet svg text,svg.chain text{font-family:var(--body)}
 .meet figcaption{display:grid;gap:2px;font-size:.93rem}
 .meet figcaption > b{font-family:var(--display);font-size:1.05rem}
 svg.chain{width:100%;height:auto}
+.lk svg{width:100%;max-width:340px;height:auto;justify-self:center}
+.lk .steps{display:flex;flex-wrap:wrap;gap:6px}
+.lk .steps button{border:1.5px solid var(--line);background:var(--bg);border-radius:99px;padding:4px 12px;font-size:.88rem}
+.lk .steps button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.lk .cap{min-height:3em;font-weight:700}
+.part{transition:transform .6s cubic-bezier(.4,1.4,.5,1),opacity .4s;transform-box:view-box}
+dl.defs{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:0;font-size:.95rem}
+dl.defs dt{font-weight:700}
+dl.defs dd{margin:0}
+.enz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:8px}
+.enz div{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);display:grid;gap:2px}
+.enz b{font-family:var(--display);font-size:1.05rem}
+.fileb{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.fileb svg{width:100%;height:auto}
+@media (max-width:520px){.fileb{grid-template-columns:1fr}.fileb > span{max-width:120px}}
 
-/* flip cards */
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
 .flip{perspective:900px;cursor:pointer;border-radius:12px}
 .fi{display:grid;transition:transform .55s;transform-style:preserve-3d;height:100%}
 .flip[aria-pressed="true"] .fi{transform:rotateY(180deg)}
@@ -250,46 +158,58 @@ svg.chain{width:100%;height:auto}
 .face .t{font-family:var(--display);font-weight:800}
 .face .d{font-size:.78rem;color:var(--muted)}
 .back{transform:rotateY(180deg);background:var(--soft);border-color:var(--accent)}
-.mt{font-size:.82rem}
-.mt th,.mt td{padding:4px 4px;font-size:.8rem;border-bottom:1px solid var(--line);text-transform:none;letter-spacing:0;vertical-align:top}
+.mt{border-collapse:collapse;width:100%}
+.mt th,.mt td{padding:4px;font-size:.8rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 .mt th{color:var(--muted);font-weight:700}
-@media (prefers-reduced-motion: reduce){.fi{transition:none}}
+.graph svg{width:100%;height:auto}
+.graph .pt{cursor:pointer}
+.graph text{fill:var(--muted);font-size:12px;font-family:var(--body)}
+.readout{font-weight:700;min-height:1.5em}
 
-.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
-.who label{display:grid;gap:4px;font-weight:700}
+.letter{background:var(--field);border:1.5px solid var(--line);border-radius:14px;padding:20px;font-size:1.08rem;line-height:2.2}
+.letter .from{font-family:var(--display);font-weight:800;font-size:1rem;color:var(--accent);line-height:1.3;margin-bottom:6px}
+.blank{display:inline-block;min-width:8ch;border-bottom:2px solid var(--muted);line-height:1.2}
+ul.inc{margin:0;padding-left:1.2em;display:grid;gap:4px}
 
-/* teacher */
+.locked{border:2px dashed var(--line)}
+.locked ul{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.selects{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.selects label{display:grid;gap:4px;font-size:.9rem;color:var(--muted)}
+.mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.mini label{display:grid;gap:4px;font-weight:700}
+.mini .row{display:flex;gap:8px;align-items:center}
+.mini input{max-width:110px}
+.ckgroup{display:grid;gap:10px}
+
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);border-left:1px solid var(--line);z-index:40;overflow-y:auto;
+  padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 18px;display:grid;gap:14px;align-content:start;box-shadow:-12px 0 30px rgba(0,0,0,.15)}
+.drawer .dh{display:flex;justify-content:space-between;align-items:center}
+.drawer ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:2px}
-.stat b{font-family:var(--display);font-size:1.7rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat b{font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums;line-height:1.1}
 .stat span{font-size:.82rem;color:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .tt{font-size:.88rem;min-width:820px}
 .tt td,.tt th{padding:7px 8px;white-space:nowrap}
 .tt tbody tr{cursor:pointer}
-.tt tbody tr:hover td{background:var(--soft)}
-.tt tbody tr[aria-selected="true"] td{background:var(--soft)}
+.tt tbody tr:hover td,.tt tbody tr[aria-selected="true"] td{background:var(--soft)}
 .prog6{display:inline-flex;gap:3px}
 .prog6 i{width:14px;height:10px;border-radius:3px;background:var(--line)}
 .prog6 i.on{background:var(--accent)}
 .prog6 i.now{background:var(--stain)}
-.dots{display:inline-flex;gap:4px}
-.dots i{width:11px;height:11px;border-radius:50%;background:var(--line)}
-.dots i.r{background:var(--bad)} .dots i.a{background:var(--stain)} .dots i.g{background:var(--good)}
 .live{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--good);margin-right:6px}
 .ans{display:grid;gap:10px}
 .ans div{display:grid;gap:2px;border-bottom:1px solid var(--line);padding-bottom:8px}
 .ans span{font-size:.8rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.ans p{white-space:pre-wrap}
-
-.onsheet{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border:1.5px dashed var(--accent);border-radius:10px;padding:8px 12px;background:var(--field)}
-.onsheet > span{font-weight:700;color:var(--accent)}
-.onsheet .tick{font-size:.92rem;align-items:center}
-ol.dn{margin:0;padding-left:1.4em;display:grid;gap:10px}
-ol.dn li{padding-left:4px}
-.mk{font-size:.78rem;color:var(--muted);white-space:nowrap}
-.blank{display:inline-block;min-width:6ch;border-bottom:2px solid var(--muted);color:transparent;line-height:1.2}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
 .pager{display:flex;justify-content:space-between;gap:10px;padding-top:6px}
+@media (prefers-reduced-motion: reduce){.part,.fi{transition:none}}
 @media (max-width:560px){ body{font-size:16px} .card{padding:14px} .letter{padding:14px;font-size:1rem} }
 </style>
 </head>
@@ -308,7 +228,7 @@ ol.dn li{padding-left:4px}
     <div class="bar">
       <div class="brand"><b>The Ruined Kit Investigation</b><span>Year 9 MYP Science · Unit 2: Body Systems</span></div>
       <div class="right">
-        <button class="tool-btn" id="roleBadge" type="button" data-go="mystery" hidden></button>
+        <span class="tool-btn" id="roleBadge" hidden></span>
         <button class="tool-btn" id="toolBtn" type="button">Toolkit</button>
       </div>
     </div>
@@ -332,13 +252,6 @@ ol.dn li{padding-left:4px}
       <dt>Denatured</dt><dd>Heat changes the active site’s shape for good, so the substrate can’t fit.</dd>
     </dl>
   </div>
-  <div><span class="eyebrow">The enzyme team</span>
-    <div class="team">
-      <div><b>Protease</b><span>protein → amino acids · egg, blood</span></div>
-      <div><b>Lipase</b><span>fat → fatty acids + glycerol · grease, butter</span></div>
-      <div><b>Amylase</b><span>starch → sugars · rice, pasta</span></div>
-    </div>
-  </div>
   <div><span class="eyebrow">Sentence starters</span>
     <ul class="starter">
       <li>The enzyme is … and the substrate is …</li>
@@ -352,7 +265,6 @@ ol.dn li{padding-left:4px}
 
 <main class="wrap">
 
-<!-- 1 MYSTERY -->
 <section class="stage" data-stage="mystery">
   <div class="head"><span class="eyebrow">The mystery · solve alone · 4 min</span><h2>Same powder. Different result.</h2></div>
   <div class="card">
@@ -367,7 +279,7 @@ ol.dn li{padding-left:4px}
       <div class="kit"><span class="boxArt"></span><b>Same powder</b><span class="small muted">used for both kits</span></div>
       <div class="kit"><span id="kitB"></span><b>Zaid’s kit</b><span class="t good">40 °C</span><span class="small muted">spotless</span></div>
     </div>
-    <blockquote id="emailText">“The final is tomorrow! My uncle washed my kit at 90 °C with your biological powder to ‘kill the stains’. It’s still stained. Zaid used the same powder at 40 °C. Why?!” <span class="muted small">Omar, Year 9 football captain</span></blockquote>
+    <blockquote>“The final is tomorrow! My mom washed my kit at 90 °C with your biological powder to ‘kill the stains’. It’s still stained. Zaid used the same powder at 40 °C. Why?!” <span class="muted small">Omar, Year 9 football captain</span></blockquote>
     <div class="chips" aria-label="Stains">
       <span class="chip"><i class="dot" style="background:var(--egg)"></i>egg</span>
       <span class="chip"><i class="dot" style="background:var(--bad)"></i>blood</span>
@@ -376,38 +288,25 @@ ol.dn li{padding-left:4px}
     </div>
   </div>
 
+  <div class="onsheet"><span>✎ Now answer the Do Now, Q1–4, on your sheet.</span></div>
+
   <div class="card">
-    <div class="onsheet"><span>✎ Write your answers on your sheet · <b>Q1–4</b>. Then mark them here.</span></div>
-    <ol class="dn">
-      <li><b>Name the main nutrient in egg, in grease and in rice.</b> <span class="mk">1 mark</span></li>
-      <li><b>Why must large food molecules be broken into small molecules during digestion?</b> <span class="mk">1 mark</span></li>
-      <li><b>Predict: what does the powder do to an egg stain, and why did the 90 °C wash fail?</b> <span class="mk">1 mark</span></li>
-      <li><b>In which organ are small food molecules absorbed into the blood?</b> <span class="mk">1 mark</span></li>
-    </ol>
-    <button class="btn" type="button" id="dnMark">Mark my Do Now</button>
+    <h3>Mark your Do Now</h3>
+    <p class="small muted">Only open this when you have written all four answers.</p>
+    <button class="btn" type="button" id="dnMark">Show the answers</button>
     <div class="reveal" id="dnReveal" hidden>
-      <p class="small muted">Tick each answer you got right.</p>
-      <label class="tick"><input type="checkbox" id="dn1"><span><b>1</b> Egg = protein · grease = fat (lipid) · rice = carbohydrate (starch). <span class="muted">All three for the mark.</span></span></label>
-      <label class="tick"><input type="checkbox" id="dn2"><span><b>2</b> So they are small enough to be absorbed through the small intestine wall into the blood.</span></label>
-      <label class="tick"><input type="checkbox" id="dn3"><span><b>3</b> Something in the powder breaks the egg protein into small pieces that wash away, like digestion. The very hot water stopped it working. <span class="muted">Both parts for the mark.</span></span></label>
-      <label class="tick"><input type="checkbox" id="dn4"><span><b>4</b> The small intestine.</span></label>
-      <div class="box"><span class="score"><span id="dnScore">0</span> / 4</span><span id="dnRole" class="boost"></span></div>
+      <p class="small muted">Tick each answer you got right. Mark your sheet in a different colour.</p>
+      <label class="tick"><input type="checkbox" id="dn1"><span><b>Q1</b> Egg = protein · grease = fat (lipid) · rice = carbohydrate (starch). <span class="muted">All three for the mark.</span></span></label>
+      <label class="tick"><input type="checkbox" id="dn2"><span><b>Q2</b> So they are small enough to be absorbed through the small intestine wall into the blood.</span></label>
+      <label class="tick"><input type="checkbox" id="dn3"><span><b>Q3</b> Something in the powder breaks the egg protein into small pieces that wash away, like digestion. The very hot water stopped it working. <span class="muted">Both parts for the mark.</span></span></label>
+      <label class="tick"><input type="checkbox" id="dn4"><span><b>Q4</b> The small intestine.</span></label>
+      <div class="box"><span class="score"><span id="dnScore">0</span> / 4</span><span class="small muted">0–1 = A · 2–3 = B · 4 = C</span></div>
     </div>
   </div>
+
+  <div class="card myrole" id="myRole" hidden></div>
 
   <div class="card">
-    <span class="eyebrow">My role</span>
-    <h3>Choose your role: A, B or C</h3>
-    <p class="small"><b>0–1 marks:</b> A &nbsp;·&nbsp; <b>2–3 marks:</b> B &nbsp;·&nbsp; <b>4 marks:</b> C &nbsp;·&nbsp; Your teacher confirms your role.</p>
-    <div class="rolecards" id="rolecards">
-      <button class="rolec" type="button" data-role="collector" aria-pressed="false"><b>A · Evidence Collector</b><span>Hints open, word bank and sentence frames on screen.</span></button>
-      <button class="rolec" type="button" data-role="analyst" aria-pressed="false"><b>B · Lab Analyst</b><span>Hints when you tap. Toolkit available.</span></button>
-      <button class="rolec" type="button" data-role="lead" aria-pressed="false"><b>C · Lead Investigator</b><span>No hints. Own words. Extra challenges.</span></button>
-    </div>
-    <p class="note">Everyone solves the same mystery. Your role changes how much help is on your screen.</p>
-  </div>
-
-  <div class="card li">
     <span class="eyebrow">Learning intention</span>
     <p>We are learning what enzymes are, how they work, and what stops them working.</p>
     <ul class="sc">
@@ -418,9 +317,8 @@ ol.dn li{padding-left:4px}
   </div>
 </section>
 
-<!-- 2 DISCOVER -->
 <section class="stage" data-stage="discover" hidden>
-  <div class="head"><span class="eyebrow">Discover · alone · 4 min</span><h2>What is an enzyme?</h2></div>
+  <div class="head"><span class="eyebrow">Discover · alone, then with a partner · 10 min</span><h2>What is an enzyme?</h2></div>
   <div class="card">
     <p class="big">An <b>enzyme</b> is a <b>protein</b> that <b>speeds up</b> a chemical reaction without being used up. Enzymes are <b>biological catalysts</b>.</p>
     <div class="facts">
@@ -428,57 +326,21 @@ ol.dn li{padding-left:4px}
       <div><b>Break big into small</b><span>They break large molecules into small ones, just like in digestion.</span></div>
       <div><b>Not used up</b><span>The same enzyme works again and again.</span></div>
     </div>
-    <p class="boost r-more"><b>Picture it:</b> an enzyme is like a tool that cuts a big molecule into small pieces. After cutting, the tool is still there, ready to cut the next one. Your stomach uses the enzyme <b>protease</b> to break down the protein in egg. Bio powder uses the same enzyme on egg stains.</p>
-    <div class="q"><span class="qt">In your own words, what is an enzyme?</span><div class="onsheet" data-q="7" id="slot7"></div></div>
+    <p class="boost r-more"><b>Picture it:</b> an enzyme is like a pair of scissors. It cuts a big molecule into small pieces, and afterwards the scissors are still there, ready to cut the next one.</p>
   </div>
+
   <div class="card">
     <span class="eyebrow">Enzymes you already use</span>
-    <div class="meet">
-      <figure>
-        <svg viewBox="0 0 220 110" role="img" aria-label="A slice of bread turning into sugar cubes">
-          <path d="M20,40 Q20,14 50,16 Q66,4 82,16 Q110,14 108,40 L104,96 L24,96 Z" style="fill:#d9a35c"/><path d="M30,44 Q30,26 52,27 Q66,18 80,27 Q98,26 98,44 L95,88 L33,88 Z" style="fill:#f6dfb1"/>
-          <path d="M120,56 H150 M142,48 L150,56 L142,64" fill="none" style="stroke:var(--muted)" stroke-width="3" stroke-linecap="round"/>
-          <rect x="162" y="38" width="18" height="18" rx="2" style="fill:#ffffff;stroke:#bfc7c5"/><rect x="186" y="38" width="18" height="18" rx="2" style="fill:#ffffff;stroke:#bfc7c5"/><rect x="174" y="62" width="18" height="18" rx="2" style="fill:#ffffff;stroke:#bfc7c5"/>
-        </svg>
-        <figcaption><b>Chewing bread</b><span><b>Amylase</b> in your saliva breaks starch into sugar. Chew bread for a minute and it starts to taste sweet.</span></figcaption>
-      </figure>
-      <figure>
-        <svg viewBox="0 0 220 110" role="img" aria-label="A fried egg turning into small amino acid beads">
-          <path d="M18,58 Q14,26 48,24 Q70,8 92,28 Q118,36 106,66 Q100,96 64,94 Q26,98 18,58 Z" style="fill:#ffffff;stroke:#d5dbd9"/><circle cx="62" cy="58" r="17" style="fill:#f0b528"/>
-          <path d="M120,56 H150 M142,48 L150,56 L142,64" fill="none" style="stroke:var(--muted)" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="170" cy="42" r="8" style="fill:#e9b52b"/><circle cx="194" cy="50" r="8" style="fill:#e07a5f"/><circle cx="172" cy="68" r="8" style="fill:#81b29a"/><circle cx="198" cy="76" r="8" style="fill:#8b6fd6"/>
-        </svg>
-        <figcaption><b>Digesting egg</b><span><b>Protease</b> in your stomach breaks egg protein into amino acids your body can absorb.</span></figcaption>
-      </figure>
-      <figure>
-        <svg viewBox="0 0 220 110" role="img" aria-label="A washing machine cleaning a stained shirt">
-          <rect x="60" y="6" width="100" height="100" rx="10" style="fill:#e6ecea;stroke:#b8c3c0"/><rect x="60" y="6" width="100" height="18" rx="8" style="fill:#cfd8d5"/><circle cx="140" cy="15" r="4" style="fill:#0b7a75"/>
-          <circle cx="110" cy="64" r="32" style="fill:#9fd6e4;stroke:#7d8a87" stroke-width="5"/>
-          <path d="M92,64 Q101,52 110,64 T128,64" fill="none" style="stroke:#ffffff" stroke-width="3"/>
-          <circle cx="102" cy="76" r="4" style="fill:#e9b52b;opacity:.5"/><circle cx="118" cy="52" r="3" style="fill:#e9b52b;opacity:.35"/>
-          <circle cx="24" cy="90" r="5" style="fill:#e7ecea"/><circle cx="36" cy="84" r="4" style="fill:#e7ecea"/><circle cx="196" cy="88" r="5" style="fill:#e7ecea"/>
-        </svg>
-        <figcaption><b>Washing a stained kit</b><span>Bio powder contains the same enzymes. They break down food stains so they wash away.</span></figcaption>
-      </figure>
-    </div>
-    <span class="eyebrow">What protease does to a protein</span>
-    <svg class="chain" viewBox="0 0 560 130" role="img" aria-label="A protein is a long chain of amino acid beads. Protease cuts the chain into single amino acids.">
-      <path d="M20,60 H210" style="stroke:var(--muted)" stroke-width="3"/>
-      <g id="beads"></g>
-      <text x="115" y="104" text-anchor="middle" style="fill:var(--ink);font-weight:700;font-size:14px">Protein: a long chain</text>
-      <path d="M240,40 Q258,20 276,40 L300,40 L310,60 L300,80 L276,80 Q258,100 240,80 Z" style="fill:var(--enzyme)"/>
-      <text x="272" y="64" text-anchor="middle" style="fill:#ffffff;font-weight:700;font-size:12px">protease</text>
-      <path d="M318,60 H350 M342,52 L350,60 L342,68" fill="none" style="stroke:var(--muted)" stroke-width="3" stroke-linecap="round"/>
-      <g id="beads2"></g>
-      <text x="455" y="104" text-anchor="middle" style="fill:var(--ink);font-weight:700;font-size:14px">Amino acids: small, dissolve</text>
-    </svg>
+    <div class="meet" id="meet"></div>
+    <span class="eyebrow">Close up: what protease does to a protein</span>
+    <svg class="chain" id="chain" viewBox="0 0 600 150" role="img" aria-label="A protein is a long chain of amino acids. Protease cuts the chain into single amino acids."></svg>
   </div>
+
   <div class="grid2">
     <div class="card lk" id="lk1"></div>
     <div class="card">
-      <span class="eyebrow">Research File A</span>
-      <dl class="defs" id="fileA">
-        <dt>Enzyme</dt><dd>A biological catalyst: a protein that speeds up a reaction and is not used up.</dd>
+      <span class="eyebrow">Research File A · Key words</span>
+      <dl class="defs">
         <dt>Substrate</dt><dd>The molecule the enzyme works on.</dd>
         <dt>Active site</dt><dd>The part of the enzyme the substrate fits into.</dd>
         <dt>Products</dt><dd>The small molecules released. The enzyme can work again.</dd>
@@ -487,60 +349,32 @@ ol.dn li{padding-left:4px}
       <p class="boost r-more"><b>Tip:</b> tap 1, 2, 3 on the diagram and read each step as it moves.</p>
     </div>
   </div>
-  <div class="card">
-    <div class="q"><label for="d1"><span class="qn">?</span>Why can’t every enzyme break down every stain?</label>
-      <details class="help"><summary>Need a hint?</summary><div class="inner">
-        <p>Look at the active site. Does every substrate fit it?</p>
-        <p class="starter">Each enzyme has an active site with … Only a substrate with a … shape fits, so …</p>
-      </div></details>
-      <textarea id="d1"></textarea></div>
-    <details class="check"><summary>Check my answer</summary><p>Each enzyme has an active site with one shape. Only a substrate with a complementary shape fits, so each enzyme is specific.</p></details>
-  </div>
-</section>
 
-<!-- 3 MATCH -->
-<section class="stage" data-stage="match" hidden>
-  <div class="head"><span class="eyebrow">Discover part 2 · pairs · 6 min</span><h2>Meet the enzyme team</h2><p class="muted">Which enzyme removes which stain?</p></div>
   <div class="card">
-    <span class="eyebrow">Research File B · What’s in bio powder</span>
+    <span class="eyebrow">Research File B · The enzyme team in bio powder</span>
     <div class="fileb"><span class="boxArt"></span>
-    <div class="enz" id="fileB">
-      <div><b>Protease</b><span>breaks down protein into <b>amino acids</b></span></div>
-      <div><b>Lipase</b><span>breaks down fat into <b>fatty acids + glycerol</b></span></div>
-      <div><b>Amylase</b><span>breaks down starch into <b>sugars</b></span></div>
-    </div></div>
-    <p class="small">Bio powder contains all three. Non-bio powder contains none.</p>
-    <p class="boost r-more"><b>How to match:</b> read the nutrient in each row, then find the enzyme above that breaks down that nutrient.</p>
+      <div class="enz">
+        <div><b>Protease</b><span>breaks down <b>protein</b> into <b>amino acids</b></span><span class="small muted">egg, blood</span></div>
+        <div><b>Lipase</b><span>breaks down <b>fat</b> into <b>fatty acids + glycerol</b></span><span class="small muted">grease, butter</span></div>
+        <div><b>Amylase</b><span>breaks down <b>starch</b> into <b>sugars</b></span><span class="small muted">rice, pasta</span></div>
+      </div>
+    </div>
+    <p class="small">Bio powder contains all three. Non-bio powder contains none. Ink is a dye: it is not a protein, fat or starch.</p>
+    <p class="boost r-more"><b>For the table on your sheet:</b> read the nutrient in each row, then find the enzyme above that breaks down that nutrient.</p>
   </div>
-  <div class="card">
-    <div class="tbl"><table>
-      <thead><tr><th>Stain</th><th>Nutrient</th><th>Enzyme</th><th>Products</th></tr></thead>
-      <tbody>
-        <tr><td>Egg / blood</td><td>Protein</td><td><select id="x1"><option value="">Choose…</option><option>protease</option><option>lipase</option><option>amylase</option></select></td><td id="p1" class="muted">?</td></tr>
-        <tr><td>Grease</td><td>Fat</td><td><select id="x2"><option value="">Choose…</option><option>protease</option><option>lipase</option><option>amylase</option></select></td><td id="p2" class="muted">?</td></tr>
-        <tr><td>Rice</td><td>Starch</td><td><select id="x3"><option value="">Choose…</option><option>protease</option><option>lipase</option><option>amylase</option></select></td><td id="p3" class="muted">?</td></tr>
-      </tbody>
-    </table></div>
-    <p id="matchFb" class="small"></p>
+
+  <div class="hints">
+    <details class="help"><summary>Hint for Q5</summary><div class="inner"><p>Use the words protein, speeds up and not used up.</p><p class="starter">An enzyme is a … that … a reaction without being …</p></div></details>
+    <details class="help"><summary>Hint for Q6</summary><div class="inner"><p>Look at the active site. Does every substrate fit it?</p><p class="starter">Each enzyme has an active site with … Only a substrate with a … shape fits, so …</p></div></details>
+    <details class="help"><summary>Hint for Q7</summary><div class="inner"><p>Is fat a protein? Does fat fit protease’s active site?</p><p class="starter">Protease removes egg because egg protein … its active site. Grease is not removed because …</p></div></details>
   </div>
-  <div class="card">
-    <div class="q"><label for="t1"><span class="qn">?</span>Why can protease remove an egg stain but not a grease stain?</label>
-      <p class="note">Use: <b>active site</b> · <b>specific</b> · <b>substrate</b></p>
-      <details class="help"><summary>Need a hint?</summary><div class="inner">
-        <p>Is fat a protein? Does fat fit protease’s active site?</p>
-        <p class="starter">Protease removes egg because egg protein … its active site. Grease is not removed because …</p>
-      </div></details>
-      <textarea id="t1"></textarea></div>
-    <div class="q r-lead"><label for="t1b">Extra: ink is not removed by bio powder. Explain why.</label><textarea id="t1b"></textarea></div>
-    <details class="check"><summary>Check my answer</summary><p>Egg protein is the substrate for protease: it has a complementary shape and fits the active site. Fat is the wrong shape, so it does not fit. Enzymes are specific, so grease needs lipase.</p></details>
-  </div>
+  <div class="onsheet"><span>✎ On your sheet: Q5–6 alone, then the enzyme table and Q7 with a partner<span class="r-lead"> (and C1)</span>.</span><label class="tick"><input type="checkbox" id="done_discover">Done</label></div>
 </section>
 
-<!-- 4 EVIDENCE -->
 <section class="stage" data-stage="evidence" hidden>
-  <div class="head"><span class="eyebrow">Evidence · groups of three (A, B, C) · 9 min</span><h2>The evidence investigation</h2>
-    <p class="muted">Discuss as a group. Everyone writes their own answers.</p></div>
-  <div class="card rolenow" id="roleNow"></div>
+  <div class="head"><span class="eyebrow">Evidence · your group · 9 min</span><h2>The evidence investigation</h2>
+    <p class="muted">Share one screen in your group: A’s screen. Discuss together. Everyone writes on their own sheet.</p></div>
+  <div class="card myrole" id="jobCard"></div>
 
   <div class="card">
     <span class="eyebrow">Data Set C · Class stain tests · 30-minute wash</span>
@@ -551,120 +385,124 @@ ol.dn li{padding-left:4px}
     <p class="note">These are the results of this class test.</p>
   </div>
 
-  <div class="card">
-    <div class="q"><label for="e1"><span class="qn">1</span>Compare tests 1 and 3. What evidence shows that enzymes help remove egg stains?</label>
-      <details class="help"><summary>Need a hint?</summary><div class="inner"><p>What is the only thing that changed between test 1 and test 3? Which powder has enzymes?</p><p class="starter">In test 1 the stain was … but in test 3 … The only difference is …</p></div></details>
-      <textarea id="e1"></textarea></div>
-    <div class="q"><label for="e2"><span class="qn">2</span>Compare tests 1 and 2. Why did changing the temperature make a difference?</label>
-      <details class="help"><summary>Need a hint?</summary><div class="inner">
-        <p>Tap 40 °C and 90 °C to see what heat does to the active site.</p>
-        <div class="lk" id="lk2"></div>
-        <p class="starter">At 90 °C the enzyme is … This changes the shape of the …, so the substrate cannot …</p>
-      </div></details>
-      <textarea id="e2"></textarea></div>
-  </div>
-
   <div class="card graph">
     <span class="eyebrow">Data Set D · Protease activity and temperature</span>
     <svg viewBox="0 0 540 290" id="graph" role="img" aria-label="Protease activity rises from 0% at 0 °C to 100% at 40 °C, then falls to 0% at 90 °C"></svg>
     <p class="readout" id="readout">Tap a point to read it.</p>
     <p class="note">Simplified class data for the protease in this powder. Other enzymes have different optimum temperatures.</p>
-    <div class="q"><span class="qt"><span class="qn">3</span>At what temperature does protease work fastest, and what happens at 90 °C?</span>
-      <div class="mini">
-        <label for="opt">Works fastest at<span class="row"><input type="number" id="opt" inputmode="numeric"> °C <span id="optFb"></span></span></label>
-        <label for="at90">Activity at 90 °C<span class="row"><input type="number" id="at90" inputmode="numeric"> % <span id="at90Fb"></span></span></label>
-      </div>
-      <details class="help"><summary>Need a hint?</summary><div class="inner"><p>Fastest = the highest point. Read straight down to the temperature.</p></div></details>
-      <textarea id="e3" placeholder="At 90 °C the protease …"></textarea></div>
   </div>
 
-  <div class="card challenge">
-    <span class="eyebrow"><span class="r-lead">Challenge · Lead Investigators</span><span class="r-mid">Challenge · optional</span></span>
-    <p><b>Omar’s uncle says: “Next time I’ll wash at 90 °C for twice as long.”</b> Would the result improve? Use Data Set D to explain.</p>
-    <textarea id="ch1"></textarea>
+  <div class="hints">
+    <details class="help"><summary>Hint for Q8</summary><div class="inner"><p>Flip cards 1 and 3. What is the only difference? Which powder has enzymes?</p><p class="starter">In test 1 the stain was … but in test 3 … The only difference is …</p></div></details>
+    <details class="help"><summary>Hint for Q9</summary><div class="inner"><p>Flip cards 1 and 2: only the temperature changed. Tap 40 °C and 90 °C to see what heat does to the active site.</p><div class="lk" id="lk2"></div><p class="starter">At 90 °C the enzyme is … This changes the shape of the …, so the substrate cannot …</p></div></details>
+    <details class="help"><summary>Hint for Q10</summary><div class="inner"><p>Fastest = the highest point on the graph. Read straight down to the temperature. Then read the point at 90 °C.</p></div></details>
   </div>
+  <div class="onsheet"><span>✎ On your sheet: Q8–10 and the group claim<span class="r-lead"> (and C2)</span>.</span><label class="tick"><input type="checkbox" id="done_evidence">Done</label></div>
 </section>
 
-<!-- 5 ADVICE -->
 <section class="stage" data-stage="advice" hidden>
-  <div class="head"><span class="eyebrow">Scientific advice · alone · 4 min</span><h2>Final advice to Omar</h2></div>
-  <p class="boost r-more"><b>Word bank:</b> protease · protein · substrate · active site · denatured · shape · optimum · 40 · 100% · 0%</p>
-  <div class="card r-lead">
-    <div class="q"><label for="b0">Write your advice to Omar in your own words.</label>
-      <p class="note">Include: the enzyme and its substrate, why 90 °C failed, a test number, a value from the graph, and your advice.</p>
-      <textarea id="b0" style="min-height:160px" placeholder="Dear Omar, …"></textarea></div>
-  </div>
-  <div class="letter r-mid" id="letter">
-    <div class="from">BrightWash Labs</div>
-    Dear Omar,<br>
-    Your kit stayed stained because <input type="text" id="b1" size="18" aria-label="Reason the kit stayed stained">.
-    Biological powder contains <input type="text" id="b2" size="10" aria-label="Enzyme in the powder">, which breaks down <input type="text" id="b3" size="10" aria-label="Substrate">.
-    At 90 °C, the enzyme <input type="text" id="b4" size="22" aria-label="What happens at 90 °C">.
-    I recommend washing the kit at <input type="text" id="b5" size="4" aria-label="Temperature"> °C because test <input type="text" id="b6" size="3" aria-label="Test number"> and the graph show <input type="text" id="b7" size="22" aria-label="Evidence">.
-  </div>
+  <div class="head"><span class="eyebrow">Advice to Omar · alone · 4 min</span><h2>Final advice to Omar</h2>
+    <p class="muted">Write your letter on your sheet (Q11). Use this page to plan it.</p></div>
   <div class="card">
-    <div class="meter"><b>Scientific words used</b><span class="pips" id="pips"><i></i><i></i><i></i><i></i></span><span class="found" id="found"></span></div>
-    <details class="help"><summary>Need a hint?</summary><div class="inner">
-      <p>Word bank: protease · protein · substrate · active site · denatured · shape · optimum · 40 · 100%</p>
-      <p class="starter">At 90 °C the enzyme is … This changes the shape of the …, so the substrate cannot …</p>
-    </div></details>
-    <span class="eyebrow">Check my paragraph</span>
-    <label class="tick"><input type="checkbox" id="k1">I named the enzyme and its substrate</label>
-    <label class="tick"><input type="checkbox" id="k2">I explained why 90 °C failed (denatured, active site)</label>
-    <label class="tick"><input type="checkbox" id="k3">I used a test number and a number from the graph</label>
-    <label class="tick"><input type="checkbox" id="k4">I gave Omar clear advice</label>
-    <details class="check"><summary>Model answer (open when your teacher says)</summary>
-      <p>Your kit stayed stained because the enzymes stopped working. Biological powder contains protease, which breaks down protein in the egg and blood stains. At 90 °C, the enzyme is denatured: its active site changes shape, so the protein no longer fits. I recommend washing the kit at 40 °C because test 1 and the graph show protease works fastest at 40 °C (100%) and has 0% activity at 90 °C.</p>
-    </details>
+    <span class="eyebrow">A strong letter includes</span>
+    <ul class="inc">
+      <li>the enzyme and its substrate</li>
+      <li>why the 90 °C wash failed (denatured, active site)</li>
+      <li>a test number and a value from the graph</li>
+      <li>clear advice: what temperature to wash at, and why</li>
+    </ul>
   </div>
+  <p class="boost r-more"><b>Word bank:</b> protease · protein · substrate · active site · denatured · shape · optimum · 40 °C · 100% · 0%</p>
+  <div class="letter r-mid">
+    <div class="from">Letter frame</div>
+    Dear Omar, your kit stayed stained because <span class="blank"></span>.
+    Biological powder contains <span class="blank"></span>, which breaks down <span class="blank"></span>.
+    At 90 °C, the enzyme <span class="blank" style="min-width:16ch"></span>.
+    I recommend washing the kit at <span class="blank" style="min-width:4ch"></span> °C because test <span class="blank" style="min-width:3ch"></span> and the graph show <span class="blank" style="min-width:16ch"></span>.
+  </div>
+  <p class="boost r-more"><b>Sentence starter:</b> At 90 °C the enzyme is … This changes the shape of the …, so the substrate cannot …</p>
+  <p class="boost r-lead"><b>C:</b> no frame for you. Write the letter in your own words, using every point in the list above.</p>
+  <div class="onsheet"><span>✎ Write your letter on your sheet: Q11.</span><label class="tick"><input type="checkbox" id="done_advice">Done</label></div>
 </section>
 
-<!-- 6 EXIT -->
 <section class="stage" data-stage="extend" hidden>
   <div class="head"><span class="eyebrow">Extend · alone · 3 min</span><h2>A new problem</h2></div>
   <div class="card">
-    <p style="font-size:1.08rem">Lactase tablets help people digest milk. <b>Lactase</b> is an enzyme that breaks down <b>lactose</b>, a sugar found in milk.</p>
-    <div class="q"><label for="x_1"><span class="qn">1</span>Identify the enzyme and the substrate.</label>
-      <details class="help"><summary>Need a hint?</summary><div class="inner"><p class="starter">The enzyme is … and the substrate is …</p></div></details>
-      <textarea id="x_1"></textarea></div>
-    <div class="q"><label for="x_2"><span class="qn">2</span>Explain why lactase should not be mixed with boiling tea.</label>
-      <details class="help"><summary>Need a hint?</summary><div class="inner"><p>What happened to the protease at 90 °C?</p><p class="starter">Boiling tea … the lactase. Its active site … so lactose …</p></div></details>
-      <textarea id="x_2"></textarea></div>
-    <div class="q r-lead"><label for="x_3"><span class="qn">3</span>Would lactase help digest the protein in milk? Explain using the lock and key model.</label><textarea id="x_3"></textarea></div>
-    <button class="btn" type="button" id="exMark">Show answers</button>
-    <div class="reveal" id="exReveal" hidden>
-      <label class="tick"><input type="checkbox" id="xo1"><span><b>1</b> Enzyme: lactase. Substrate: lactose.</span></label>
-      <label class="tick"><input type="checkbox" id="xo2"><span><b>2</b> Boiling denatures lactase: its active site changes shape, so lactose no longer fits and is not broken down.</span></label>
-      <p class="r-lead"><b>3</b> No. Enzymes are specific: protein is the wrong shape to fit lactase’s active site. Milk protein needs protease.</p>
-      <div class="box"><span class="score"><span id="exScore">0</span> / 2</span><span class="muted small">Tick each answer you got right.</span></div>
+    <div class="box">
+      <svg viewBox="0 0 220 110" width="220" role="img" aria-label="A milk carton and lactase tablets" style="max-width:100%;height:auto">
+        <path d="M20,30 L40,10 L80,10 L100,30 L100,104 L20,104 Z" style="fill:#ffffff;stroke:#9fb3b0" stroke-width="2"/><path d="M20,30 L100,30" style="stroke:#9fb3b0" stroke-width="2"/>
+        <rect x="20" y="52" width="80" height="26" style="fill:#4f9fd1"/><text x="60" y="70" text-anchor="middle" style="fill:#ffffff;font-weight:700;font-size:14px;font-family:var(--body)">MILK</text>
+        <text x="60" y="94" text-anchor="middle" style="fill:#5e6d6a;font-size:9px;font-family:var(--body)">contains lactose</text>
+        <ellipse cx="150" cy="44" rx="18" ry="11" style="fill:#e9b52b"/><ellipse cx="186" cy="58" rx="18" ry="11" style="fill:#e9b52b"/><ellipse cx="156" cy="74" rx="18" ry="11" style="fill:#e9b52b"/>
+        <text x="168" y="102" text-anchor="middle" style="fill:var(--muted);font-size:11px;font-family:var(--body)">lactase tablets</text>
+      </svg>
+      <p style="flex:1;min-width:220px">Lactase tablets help people digest milk. <b>Lactase</b> is an enzyme that breaks down <b>lactose</b>, a sugar found in milk.</p>
     </div>
   </div>
-
-  <div class="card">
-    <h3>Then and now</h3>
-    <div class="tn">
-      <div class="then"><span class="eyebrow">Then</span><p>Look at your Do Now prediction on your sheet (<b>Q3</b>).</p></div>
-      <div class="now"><span class="eyebrow">Now</span><p>Look at your Extend answer (<b>Q13</b>). On your sheet, write what changed in your thinking.</p></div>
-    </div>
+  <div class="hints">
+    <details class="help"><summary>Hint for Q12</summary><div class="inner"><p class="starter">The enzyme is … and the substrate is …</p></div></details>
+    <details class="help"><summary>Hint for Q13</summary><div class="inner"><p>What happened to the protease at 90 °C? Boiling is even hotter.</p><p class="starter">Boiling tea … the lactase. Its active site … so lactose …</p></div></details>
   </div>
-
-  <div class="card">
-    <h3>Success criteria</h3>
-    <div class="tlrow"><span>I can state what an enzyme is and name its substrate and products.</span><div class="tlopts"><label><input type="radio" name="sc1" id="sc1a">Not yet</label><label><input type="radio" name="sc1" id="sc1b">Getting there</label><label><input type="radio" name="sc1" id="sc1c">Confident</label></div></div>
-    <div class="tlrow"><span>I can explain why an enzyme only breaks down one type of molecule.</span><div class="tlopts"><label><input type="radio" name="sc2" id="sc2a">Not yet</label><label><input type="radio" name="sc2" id="sc2b">Getting there</label><label><input type="radio" name="sc2" id="sc2c">Confident</label></div></div>
-    <div class="tlrow"><span>I can use evidence to explain why heating stops an enzyme working.</span><div class="tlopts"><label><input type="radio" name="sc3" id="sc3a">Not yet</label><label><input type="radio" name="sc3" id="sc3b">Getting there</label><label><input type="radio" name="sc3" id="sc3c">Confident</label></div></div>
-  </div>
-  <p class="muted">Next lesson: your body’s own enzymes, and how temperature, pH and surface area affect them.</p>
-  <div class="confirm" id="clearBox"><button class="btn ghost" type="button" id="clearBtn">Clear my answers</button></div>
+  <div class="onsheet"><span>✎ On your sheet: Q12–13<span class="r-lead"> (and C3)</span>.</span><label class="tick"><input type="checkbox" id="done_extend">Done</label></div>
+  <p class="muted">Finished every stage? Go to <b>6 Check answers</b>.</p>
 </section>
 
-<!-- TEACHER -->
+<section class="stage" data-stage="check" hidden>
+  <div class="head"><span class="eyebrow">Check answers · alone</span><h2>Check your answers</h2></div>
+  <div class="card locked" id="lockBox"></div>
+  <div id="checkBody" class="stage" hidden>
+    <p class="boost"><b>Mark your sheet in a different colour.</b> Tick each answer you got right. Correct anything you missed.</p>
+    <div class="card">
+      <h3>The enzyme table</h3>
+      <p class="small muted">Copy what you wrote on your sheet.</p>
+      <div class="selects">
+        <label>Egg / blood<select id="x1"><option value="">Choose…</option><option>protease</option><option>lipase</option><option>amylase</option></select></label>
+        <label>Grease<select id="x2"><option value="">Choose…</option><option>protease</option><option>lipase</option><option>amylase</option></select></label>
+        <label>Rice<select id="x3"><option value="">Choose…</option><option>protease</option><option>lipase</option><option>amylase</option></select></label>
+      </div>
+      <p id="matchFb" class="small"></p>
+    </div>
+    <div class="card">
+      <h3>Discover</h3>
+      <div class="ckgroup">
+        <label class="tick"><input type="checkbox" id="ck5"><span><b>Q5</b> An enzyme is a protein that speeds up a reaction without being used up: a biological catalyst.</span></label>
+        <label class="tick"><input type="checkbox" id="ck6"><span><b>Q6</b> Each enzyme has an active site with one shape. Only a substrate with a complementary shape fits, so each enzyme is specific.</span></label>
+        <label class="tick"><input type="checkbox" id="ck7"><span><b>Q7</b> Egg protein has a complementary shape and fits protease’s active site, so it is broken down. Fat is the wrong shape and does not fit, so grease needs lipase.</span></label>
+        <label class="tick r-lead"><input type="checkbox" id="ckC1"><span><b>C1</b> Ink is a dye, not a protein, fat or starch, so it does not fit the active site of any of the three enzymes.</span></label>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Evidence</h3>
+      <div class="mini">
+        <label for="opt">Q10: protease works fastest at<span class="row"><input type="number" id="opt" inputmode="numeric"> °C <span id="optFb"></span></span></label>
+        <label for="at90">Q10: activity at 90 °C<span class="row"><input type="number" id="at90" inputmode="numeric"> % <span id="at90Fb"></span></span></label>
+      </div>
+      <div class="ckgroup">
+        <label class="tick"><input type="checkbox" id="ck8"><span><b>Q8</b> Test 1 (bio) removed the egg but test 3 (non-bio, no enzymes) did not. Only the powder changed, so the enzymes do the work.</span></label>
+        <label class="tick"><input type="checkbox" id="ck9"><span><b>Q9</b> Only the temperature changed. At 90 °C the protease is denatured: its active site changes shape, so the egg protein no longer fits.</span></label>
+        <label class="tick"><input type="checkbox" id="ck10"><span><b>Q10</b> Fastest at 40 °C (100%). At 90 °C the activity is 0% because the protease is denatured.</span></label>
+        <label class="tick r-lead"><input type="checkbox" id="ckC2"><span><b>C2</b> No. At 90 °C the protease is denatured (0% activity) and denaturing is permanent, so a longer wash cannot help. Wash at 40 °C.</span></label>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Advice to Omar</h3>
+      <label class="tick"><input type="checkbox" id="ck11"><span><b>Q11</b> Model letter: Your kit stayed stained because the enzymes stopped working. Biological powder contains protease, which breaks down the protein in egg and blood stains. At 90 °C the enzyme is denatured: its active site changes shape, so the protein no longer fits. I recommend washing the kit at 40 °C, because test 1 and the graph show protease works fastest at 40 °C (100%) and has 0% activity at 90 °C. <span class="muted">Tick if yours has all four points.</span></span></label>
+    </div>
+    <div class="card">
+      <h3>Extend</h3>
+      <div class="ckgroup">
+        <label class="tick"><input type="checkbox" id="ck12"><span><b>Q12</b> Enzyme: lactase. Substrate: lactose.</span></label>
+        <label class="tick"><input type="checkbox" id="ck13"><span><b>Q13</b> Boiling denatures lactase: its active site changes shape, so lactose no longer fits and is not broken down.</span></label>
+        <label class="tick r-lead"><input type="checkbox" id="ckC3"><span><b>C3</b> No. Enzymes are specific: protein is the wrong shape to fit lactase’s active site. Milk protein needs protease.</span></label>
+      </div>
+    </div>
+    <div class="card"><div class="box"><span class="score"><span id="ckScore">0</span> / <span id="ckTotal">9</span></span><span class="muted">Now finish the reflection at the end of your sheet.</span></div></div>
+  </div>
+</section>
+
 <section class="stage" data-stage="teacher" hidden>
   <div class="head"><span class="eyebrow">Teacher view</span><h2>Class progress</h2></div>
-  <div class="card" id="tSetup" hidden>
-    <h3>Not connected yet</h3>
-    <p>Student answers are not being saved anywhere yet. Follow the setup steps in the README on GitHub, then put your Google Apps Script link into <code>SYNC_URL</code> at the top of the script in index.html.</p>
-  </div>
+  <div class="card" id="tSetup" hidden><h3>Not connected yet</h3><p>Put your Google Apps Script link into <code>SYNC_URL</code> at the top of the script in index.html.</p></div>
   <div class="card" id="tLogin">
     <div class="who"><label for="tpin">Teacher PIN<input type="password" id="tpin" data-nosave autocomplete="off"></label></div>
     <button class="btn" type="button" id="tShow">Show progress</button>
@@ -677,7 +515,7 @@ ol.dn li{padding-left:4px}
       <span class="note" id="tUpdated"></span>
     </div>
     <div class="stats" id="tStats"></div>
-    <div class="card"><div class="tbl"><table class="tt" id="tTable"></table></div><p class="note">Tap a student to see all their answers. Updates every 20 seconds.</p></div>
+    <div class="card"><div class="tbl"><table class="tt" id="tTable"></table></div><p class="note">Tap a student for details. Updates every 20 seconds.</p></div>
     <div class="card" id="tDetail" hidden></div>
     <div class="confirm" id="tClearBox"><button class="btn ghost" type="button" id="tClear">Clear all student data</button></div>
   </div>
@@ -692,66 +530,39 @@ ol.dn li{padding-left:4px}
 /* Paste your Google Apps Script web app link between the quotes to save student progress for the teacher view. */
 const SYNC_URL='https://script.google.com/macros/s/AKfycbxjlNzOSCJOLuoCYfvaiq5BUNtnHhnchmYTq3rZyJV1F1yju3RxTFD0ddClsuzGXRpREQ/exec';
 const STAGES=[
-  {id:'mystery',label:'The mystery',min:4},
-  {id:'discover',label:'Discover: enzymes',min:4},
-  {id:'match',label:'Discover: enzyme team',min:6},
-  {id:'evidence',label:'Evidence',min:9},
-  {id:'advice',label:'Advice to Omar',min:4},
-  {id:'extend',label:'Extend',min:3}];
+  {id:'mystery',label:'The mystery'},
+  {id:'discover',label:'Discover'},
+  {id:'evidence',label:'Evidence'},
+  {id:'advice',label:'Advice to Omar'},
+  {id:'extend',label:'Extend'},
+  {id:'check',label:'Check answers'}];
 const ROLES={
-  collector:{name:'A · Evidence Collector',task:['Flip cards 1, 2 and 3 first and read the backs to your group.','Your hints are already open. Use the sentence starters.','Write your own answers to Q1–3.']},
-  analyst:{name:'B · Lab Analyst',task:['Flip the cards you need, then answer Q1–3.','Tap “Need a hint?” only if you are stuck.','Check each answer uses at least one key word.']},
-  lead:{name:'C · Lead Investigator',task:['No hints for you: use only the data.','Answer Q1–3, quoting a number each time.','Then answer the Challenge at the bottom.']}};
-const KEY='ruined-kit-v2';
+  collector:{name:'A · Evidence Collector',gets:['Hints are already open on every page.','Word bank, sentence starters and a letter frame.','The Toolkit is always available.'],
+    job:['Group job: your screen is the group’s screen. Flip the cards and read the backs aloud.','Your hints are open below.']},
+  analyst:{name:'B · Lab Analyst',gets:['Hints when you tap “Hint for Q…”.','A letter frame for your advice.','The Toolkit is available.'],
+    job:['Group job: check every answer has a key word and a test number.','Tap a hint only if you are stuck.']},
+  lead:{name:'C · Lead Investigator',gets:['No hints: work from the evidence only.','Write your letter in your own words.','Extra C questions on your sheet.'],
+    job:['Group job: ask “How do you know?” and share the group claim.','No hints: use only the data. Then do C2 on your sheet.']}};
+const KEY='ruined-kit-v3';
 let S={};
 try{S=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){S={}}
-S.f=S.f||{}; S.id=S.id||(Math.random().toString(36).slice(2,9)+Date.now().toString(36));
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){} queueSync()};
+S.f=S.f||{}; S.flip=S.flip||{}; S.id=S.id||(Math.random().toString(36).slice(2,9)+Date.now().toString(36));
+let cur='mystery';
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const dnTotal=f=>[1,2,3,4].filter(n=>f['dn'+n]).length;
+const roleFor=n=>n<=1?'collector':n<=3?'analyst':'lead';
+function myRole(){ return S.roleOverride || (S.dnShown?roleFor(dnTotal(S.f)):null); }
+const DONE=['discover','evidence','advice','extend'];
+const unlocked=()=>!!S.dnShown && DONE.every(k=>S.f['done_'+k]);
 let syncT=null;
 function queueSync(now){ if(!SYNC_URL) return; clearTimeout(syncT); syncT=setTimeout(sync,now?200:2500); }
 function sync(){
-  const body=JSON.stringify({id:S.id,name:S.f.sname||'',cls:S.f.sclass||'',role:S.role||'',stage:S.max||1,cur:cur,exShown:!!S.exShown,f:S.f});
+  const body=JSON.stringify({id:S.id,name:S.f.sname||'',cls:S.f.sclass||'',role:myRole()||'',stage:S.max||1,cur:cur,dnShown:!!S.dnShown,f:S.f});
   try{ fetch(SYNC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body}).catch(()=>{}); }catch(e){}
 }
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){} queueSync()};
 
-/* ---------- shirts ---------- */
-function shirt(stained){
-  const body='M64,22 L84,12 Q100,26 116,12 L136,22 L176,48 L158,80 L140,70 L140,176 L60,176 L60,70 L42,80 L24,48 Z';
-  let s=`<svg viewBox="0 0 200 190" role="img" aria-label="${stained?'Football shirt with egg, blood, grease and rice stains':'Clean football shirt'}">
-    <path d="${body}" style="fill:var(--shirt)" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
-    <path d="M24,48 L42,80 L50,75 L32,43Z M176,48 L158,80 L150,75 L168,43Z" style="fill:var(--shirt2)"/>
-    <path d="M60,160 H140" style="stroke:var(--shirt2)" stroke-width="5"/>
-    <path d="M84,12 Q100,32 116,12" fill="none" style="stroke:var(--shirt2)" stroke-width="5"/>
-    <text x="100" y="122" text-anchor="middle" style="fill:var(--shirt2);font-family:var(--display);font-weight:800;font-size:44px">9</text>`;
-  if(stained){
-    s+=`<path d="${blob(80,66,12,4)}" style="fill:var(--egg)"/><path d="${blob(78,64,6,8)}" style="fill:#f6d77a"/>
-    <path d="${blob(124,132,12,9)}" style="fill:#7a2a1c"/><circle cx="134" cy="146" r="3" style="fill:#7a2a1c"/>
-    <path d="${blob(80,140,11,14)}" style="fill:#b08a3c;opacity:.85"/>
-    <path d="${blob(126,78,10,21)}" style="fill:var(--rice)"/>`;
-    const R=rng(8); for(let i=0;i<6;i++){const x=120+R()*12,y=72+R()*12; s+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="5" height="2" rx="1" style="fill:#fffaf0"/>`}
-  }
-  return s+'</svg>';
-}
-function powderBox(){
-  return `<svg viewBox="0 0 200 190" role="img" aria-label="Box of BrightWash biological washing powder: digests tough stains, wash at 40 degrees">
-    <path d="M40,40 L150,40 L172,26 L62,26 Z" style="fill:#c9ecea"/>
-    <path d="M150,40 L172,26 L172,160 L150,174 Z" style="fill:#0a5f5b"/>
-    <rect x="40" y="40" width="110" height="134" rx="4" style="fill:#0b7a75"/>
-    <rect x="48" y="50" width="94" height="22" rx="3" style="fill:#ffffff"/>
-    <text x="95" y="66" text-anchor="middle" style="fill:#0b7a75;font-family:var(--display);font-weight:800;font-size:15px">BrightWash</text>
-    <text x="95" y="92" text-anchor="middle" style="fill:#ffffff;font-family:var(--display);font-weight:800;font-size:16px">BIOLOGICAL</text>
-    <text x="95" y="108" text-anchor="middle" style="fill:#d6f3f1;font-size:10px">digests tough stains</text>
-    <circle cx="74" cy="138" r="18" style="fill:#ffffff"/>
-    <text x="74" y="136" text-anchor="middle" style="fill:#0b7a75;font-weight:700;font-size:13px">40 °C</text>
-    <text x="74" y="148" text-anchor="middle" style="fill:#0b7a75;font-size:7px">WASH AT</text>
-    <circle cx="118" cy="132" r="5" style="fill:#e9b52b"/><circle cx="130" cy="142" r="4" style="fill:#e89a45"/><circle cx="116" cy="150" r="4" style="fill:#b08a3c"/>
-    
-    <ellipse cx="22" cy="176" rx="18" ry="5" style="fill:#e7ecea"/><circle cx="14" cy="172" r="3" style="fill:#e7ecea"/><circle cx="26" cy="170" r="2.5" style="fill:#e7ecea"/>
-  </svg>`;
-}
-
-/* ---------- blobs / cloth ---------- */
+/* ---------- pictures ---------- */
 function rng(seed){return()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646}}
 function blob(cx,cy,r,seed,n=11){
   const R=rng(seed),pts=[];
@@ -760,90 +571,128 @@ function blob(cx,cy,r,seed,n=11){
   for(let i=0;i<n;i++){const p=pts[i],q=pts[(i+1)%n],m=[(p[0]+q[0])/2,(p[1]+q[1])/2]; if(i===0){const z=pts[n-1];d+=`M${((z[0]+p[0])/2).toFixed(1)},${((z[1]+p[1])/2).toFixed(1)}`} d+=` Q${p[0].toFixed(1)},${p[1].toFixed(1)} ${m[0].toFixed(1)},${m[1].toFixed(1)}`}
   return d+'Z';
 }
+function shirtPath(x,y,s){ const P=(a,b)=>`${(x+a*s).toFixed(1)},${(y+b*s).toFixed(1)}`;
+  return `M${P(44,10)} L${P(64,0)} Q${P(80,14)} ${P(96,0)} L${P(116,10)} L${P(156,36)} L${P(138,68)} L${P(120,58)} L${P(120,164)} L${P(40,164)} L${P(40,58)} L${P(22,68)} L${P(4,36)} Z`; }
+function shirt(stained){
+  let s=`<svg viewBox="0 0 200 190" role="img" aria-label="${stained?'Football shirt with egg, blood, grease and rice stains':'Clean football shirt'}">
+    <path d="${shirtPath(20,12,1)}" style="fill:var(--shirt)" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+    <path d="M60,160 H140" style="stroke:var(--shirt2)" stroke-width="5"/>
+    <path d="M84,12 Q100,32 116,12" fill="none" style="stroke:var(--shirt2)" stroke-width="5"/>
+    <text x="100" y="122" text-anchor="middle" style="fill:var(--shirt2);font-family:var(--display);font-weight:800;font-size:44px">9</text>`;
+  if(stained){
+    s+=`<path d="${blob(80,66,12,4)}" style="fill:var(--egg)"/><path d="${blob(124,132,12,9)}" style="fill:#7a2a1c"/><path d="${blob(80,140,11,14)}" style="fill:#b08a3c;opacity:.85"/><path d="${blob(126,78,10,21)}" style="fill:var(--rice)"/>`;
+    const R=rng(8); for(let i=0;i<6;i++){const x=120+R()*12,y=72+R()*12; s+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="5" height="2" rx="1" style="fill:#fffaf0"/>`}
+  }
+  return s+'</svg>';
+}
+function powderBox(){
+  return `<svg viewBox="0 0 200 190" role="img" aria-label="Box of BrightWash biological washing powder: digests tough stains, wash at 40 degrees">
+    <path d="M40,40 L150,40 L172,26 L62,26 Z" style="fill:#c9ecea"/><path d="M150,40 L172,26 L172,160 L150,174 Z" style="fill:#0a5f5b"/>
+    <rect x="40" y="40" width="110" height="134" rx="4" style="fill:#0b7a75"/><rect x="48" y="50" width="94" height="22" rx="3" style="fill:#ffffff"/>
+    <text x="95" y="66" text-anchor="middle" style="fill:#0b7a75;font-family:var(--display);font-weight:800;font-size:15px">BrightWash</text>
+    <text x="95" y="92" text-anchor="middle" style="fill:#ffffff;font-family:var(--display);font-weight:800;font-size:16px">BIOLOGICAL</text>
+    <text x="95" y="108" text-anchor="middle" style="fill:#d6f3f1;font-size:10px">digests tough stains</text>
+    <circle cx="74" cy="138" r="18" style="fill:#ffffff"/><text x="74" y="136" text-anchor="middle" style="fill:#0b7a75;font-weight:700;font-size:13px">40 °C</text>
+    <text x="74" y="148" text-anchor="middle" style="fill:#0b7a75;font-size:7px">WASH AT</text>
+    <circle cx="118" cy="132" r="5" style="fill:#e9b52b"/><circle cx="130" cy="142" r="4" style="fill:#e89a45"/><circle cx="116" cy="150" r="4" style="fill:#b08a3c"/>
+  </svg>`;
+}
 $('#kitA').innerHTML=shirt(true); $('#kitB').innerHTML=shirt(false);
 $$('.boxArt').forEach(el=>el.innerHTML=powderBox());
 
-/* ---------- form persistence ---------- */
-/* ---------- written answers go on the paper sheet ---------- */
-const SHEETQ={d1:'6',t1:'7',t1b:'C1',e1:'8',e2:'9',e3:'10',ch1:'C2',b0:'11',x_1:'12',x_2:'13',x_3:'C3'};
-const qName=q=>q.startsWith('C')?q:'Q'+q;
-function marker(id,q){const d=document.createElement('div');d.className='onsheet';
-  d.innerHTML=`<span>✎ Write on your sheet · <b>${qName(q)}</b></span><label class="tick"><input type="checkbox" id="done_${id}">Done</label>`;return d;}
-Object.entries(SHEETQ).forEach(([id,q])=>{const ta=$('#'+id); if(ta) ta.replaceWith(marker(id,q));});
-$('#slot7').replaceWith(marker('d7','5'));
-$$('.letter input').forEach(i=>{const s=document.createElement('span');s.className='blank';s.textContent='_'.repeat(Math.max(4,+i.size||6));i.replaceWith(s);});
-const lm=marker('letter','11'); lm.classList.add('r-mid'); $('#letter').after(lm);
-$('.meter').hidden=true;
-
-$$('main textarea, main input, main select').forEach(el=>{
-  if(!el.id || el.hasAttribute('data-nosave')) return;
-  const v=S.f[el.id];
-  if(v!==undefined){ if(el.type==='checkbox'||el.type==='radio') el.checked=!!v; else el.value=v; }
-  const ev=(el.tagName==='SELECT'||el.type==='checkbox'||el.type==='radio')?'change':'input';
-  el.addEventListener(ev,()=>{
-    if(el.type==='radio'){ $$(`input[name="${el.name}"]`).forEach(r=>S.f[r.id]=r.checked); }
-    else S.f[el.id]=(el.type==='checkbox')?el.checked:el.value;
-    save(); update();
-  });
-});
-/* grow letter inputs with their text */
-$$('.letter input').forEach(i=>{const fit=()=>{i.style.width=Math.max(+i.size||6,i.value.length+2)+'ch'};i.addEventListener('input',fit);fit()});
+function enz(x,y,label,fill){ return `<path transform="translate(${x},${y})" d="M0,10 Q0,0 10,0 L46,0 Q56,0 56,10 L56,40 Q56,50 46,50 L10,50 Q0,50 0,40 L0,33 L11,25 L0,17 Z" style="fill:${fill||'var(--enzyme)'}"/>
+  <text x="${x+28}" y="${y+68}" text-anchor="middle" style="fill:var(--ink);font-weight:700;font-size:12px">${label}</text>`; }
+const arrow=(x,y)=>`<path d="M${x},${y} H${x+26} M${x+19},${y-7} L${x+26},${y} L${x+19},${y+7}" fill="none" style="stroke:var(--muted)" stroke-width="3" stroke-linecap="round"/>`;
+const lab=(x,y,t)=>`<text x="${x}" y="${y}" text-anchor="middle" style="fill:var(--muted);font-size:11px">${t}</text>`;
+const C5=['#e9b52b','#e07a5f','#81b29a','#4f9fd1','#c06fb8'];
+(function(){
+  const bread=`<path d="M12,40 Q12,14 40,16 Q54,4 68,16 Q94,14 92,40 L88,92 L16,92 Z" style="fill:#d9a35c"/><path d="M22,44 Q22,26 42,27 Q54,18 66,27 Q82,26 82,44 L79,84 L25,84 Z" style="fill:#f6dfb1"/>`+lab(52,110,'starch');
+  const sugar=`<rect x="226" y="34" width="18" height="18" rx="2" style="fill:#ffffff;stroke:#a9b5b2"/><rect x="250" y="34" width="18" height="18" rx="2" style="fill:#ffffff;stroke:#a9b5b2"/><rect x="238" y="58" width="18" height="18" rx="2" style="fill:#ffffff;stroke:#a9b5b2"/>`+lab(247,110,'sugar');
+  const egg=`<path d="${blob(52,56,36,5,12)}" style="fill:#ffffff;stroke:#c9d3d1"/><circle cx="50" cy="56" r="15" style="fill:#f0b528"/>`+lab(52,110,'egg protein');
+  let amino=''; [[228,38],[252,46],[232,66],[258,72],[244,56]].forEach(([x,y],i)=>amino+=`<circle cx="${x}" cy="${y}" r="8" style="fill:${C5[i]}"/>`); amino+=lab(244,110,'amino acids');
+  const dirty=`<path d="${shirtPath(14,10,.46)}" style="fill:var(--shirt)"/><path d="${blob(42,46,7,4)}" style="fill:var(--egg)"/><path d="${blob(62,72,7,9)}" style="fill:#7a2a1c"/><path d="${blob(44,80,6,14)}" style="fill:#b08a3c"/>`+lab(52,110,'stained kit');
+  const clean=`<path d="${shirtPath(210,10,.46)}" style="fill:var(--shirt)"/>`+lab(247,110,'clean kit');
+  const fig=(svg,title,txt)=>`<figure><svg viewBox="0 0 300 118" role="img" aria-label="${title}">${svg}</svg><figcaption><b>${title}</b><span>${txt}</span></figcaption></figure>`;
+  $('#meet').innerHTML=
+    fig(bread+arrow(104,52)+enz(140,27,'amylase')+arrow(204,52)+sugar,'In your mouth','Chew bread for a minute and it starts to taste sweet. <b>Amylase</b> in your saliva breaks starch into sugar.')+
+    fig(egg+arrow(104,52)+enz(140,27,'protease')+arrow(204,52)+amino,'In your stomach','<b>Protease</b> breaks the protein in egg into amino acids, small enough to absorb.')+
+    fig(dirty+arrow(104,52)+enz(140,27,'bio powder','#0b7a75')+arrow(204,52)+clean,'In the wash','Bio powder contains <b>the same enzymes</b>. They break food stains into small pieces that wash away.');
+  let c=`<path d="M20,70 H262" style="stroke:var(--muted)" stroke-width="3"/>`;
+  for(let i=0;i<10;i++) c+=`<circle cx="${30+i*25}" cy="70" r="11" style="fill:${C5[i%5]}"/>`;
+  c+=`<text x="141" y="114" text-anchor="middle" style="fill:var(--ink);font-weight:700;font-size:14px">Protein: a long chain</text>`;
+  c+=`<path transform="translate(274,40)" d="M0,10 Q0,0 10,0 L52,0 Q62,0 62,10 L62,50 Q62,60 52,60 L10,60 Q0,60 0,50 L0,38 L12,30 L0,22 Z" style="fill:var(--enzyme)"/><text x="311" y="75" text-anchor="middle" style="fill:#ffffff;font-weight:700;font-size:11px">protease</text>`;
+  c+=`<text x="305" y="28" text-anchor="middle" style="fill:var(--muted);font-size:12px">cuts the chain</text>`;
+  c+=arrow(348,70);
+  [[400,52],[426,82],[452,48],[478,80],[504,50],[530,84],[556,54],[414,96],[492,98],[570,90]].forEach(([x,y],i)=>c+=`<circle cx="${x}" cy="${y}" r="11" style="fill:${C5[i%5]}"/>`);
+  c+=`<text x="485" y="134" text-anchor="middle" style="fill:var(--ink);font-weight:700;font-size:14px">Single amino acids</text>`;
+  $('#chain').innerHTML=c;
+})();
 
 /* ---------- stages ---------- */
 const nav=$('#stageNav');
-STAGES.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.dataset.go=s.id;b.textContent=`${i+1} ${s.label}`;nav.appendChild(b)});
-let cur='mystery';
+STAGES.forEach(s=>{const b=document.createElement('button');b.type='button';b.dataset.go=s.id;nav.appendChild(b)});
+function navLabels(){ $$('#stageNav button').forEach((b,i)=>{const s=STAGES[i]; b.textContent=`${i+1} ${s.label}${s.id==='check'&&!unlocked()?' 🔒':''}`;}); }
 function show(id,push){
   if(id!=='teacher' && !STAGES.find(s=>s.id===id)) id='mystery';
   cur=id;
   $$('main > .stage').forEach(sec=>sec.hidden=sec.dataset.stage!==id);
   $$('#stageNav button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===id?'step':'false'));
   $('#pager').hidden=(id==='teacher');
-  if(id==='teacher'){ if(push && location.hash!=='#teacher') location.hash='teacher'; window.scrollTo({top:0}); teacherOpen(); return; }
+  if(push && location.hash!=='#'+id) location.hash=id;
+  window.scrollTo({top:0});
+  if(id==='teacher'){ teacherOpen(); return; }
   stopTeacher();
   const i=STAGES.findIndex(s=>s.id===id);
   if((S.max||0)<i+1){ S.max=i+1; save(); } queueSync(true);
   $('#prev').style.visibility=i===0?'hidden':'visible';
   $('#next').style.visibility=i===STAGES.length-1?'hidden':'visible';
   const locked=id==='mystery';
-  $('#toolBtn').disabled=locked; $('#toolBtn').textContent=locked?'Toolkit opens after your prediction':'Toolkit';
+  $('#toolBtn').disabled=locked; $('#toolBtn').textContent=locked?'Toolkit opens after the Do Now':'Toolkit';
   if(locked) $('#drawer').hidden=true;
-  if(push && location.hash!=='#'+id) location.hash=id;
-  window.scrollTo({top:0}); update();
+  update();
 }
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]'); if(g) show(g.dataset.go,true)});
 $('#prev').onclick=()=>{const i=STAGES.findIndex(s=>s.id===cur); if(i>0) show(STAGES[i-1].id,true)};
 $('#next').onclick=()=>{const i=STAGES.findIndex(s=>s.id===cur); if(i<STAGES.length-1) show(STAGES[i+1].id,true)};
 window.addEventListener('hashchange',()=>{const h=location.hash.slice(1); if(h&&h!==cur) show(h,false)});
-
-/* ---------- toolkit ---------- */
 $('#toolBtn').onclick=()=>{$('#drawer').hidden=!$('#drawer').hidden};
 $('#drawerClose').onclick=()=>{$('#drawer').hidden=true};
 document.addEventListener('keydown',e=>{if(e.key==='Escape') $('#drawer').hidden=true});
 
-/* ---------- protein chain beads ---------- */
-(function(){
-  const C=['#e9b52b','#e07a5f','#81b29a','#8b6fd6','#4f9fd1'];
-  let a='',b='';
-  for(let i=0;i<8;i++) a+=`<circle cx="${28+i*25}" cy="60" r="11" style="fill:${C[i%5]}"/>`;
-  const pos=[[380,40],[408,72],[432,38],[458,70],[482,40],[506,74],[528,44],[396,86]];
-  pos.forEach(([x,y],i)=>b+=`<circle cx="${x}" cy="${y-10}" r="11" style="fill:${C[i%5]}"/>`);
-  $('#beads').innerHTML=a; $('#beads2').innerHTML=b;
-})();
+/* ---------- form persistence ---------- */
+$$('main input, main select').forEach(el=>{
+  if(!el.id || el.hasAttribute('data-nosave')) return;
+  const v=S.f[el.id];
+  if(v!==undefined){ if(el.type==='checkbox') el.checked=!!v; else el.value=v; }
+  el.addEventListener(el.tagName==='SELECT'||el.type==='checkbox'?'change':'input',()=>{
+    S.f[el.id]=el.type==='checkbox'?el.checked:el.value; save(); update();
+  });
+});
+
 /* ---------- roles ---------- */
-function applyRole(changed){
-  const r=S.role||'analyst';
-  document.body.dataset.role=r;
-  $$('#rolecards .rolec').forEach(b=>b.setAttribute('aria-pressed',S.role===b.dataset.role?'true':'false'));
-  $('#roleBadge').hidden=!S.role; $('#roleBadge').textContent=S.role?ROLES[r].name:'';
-  if(changed) $$('details.help').forEach(d=>d.open=(r==='collector'));
-  const R=ROLES[r];
-  $('#roleNow').innerHTML=`<span class="eyebrow">My role${S.role?'':' (not chosen yet)'}</span><h3>${R.name}</h3><ul>${R.task.map(t=>`<li>${t}</li>`).join('')}</ul><p class="note">Wrong role? <button type="button" class="tool-btn" data-go="mystery">Change it</button></p>`;
-  if(r==='lead' && !$('#drawer').hidden) $('#drawer').hidden=true;
-  $('#toolBtn').hidden=(r==='lead');
+let lastRole=null;
+function applyRole(){
+  const r=myRole(), shown=r||'analyst';
+  document.body.dataset.role=shown;
+  if(shown!==lastRole){ $$('details.help').forEach(d=>d.open=(shown==='collector')); lastRole=shown; }
+  $('#roleBadge').hidden=!r; $('#roleBadge').textContent=r?ROLES[r].name:'';
+  $('#toolBtn').hidden=(shown==='lead');
+  if(shown==='lead') $('#drawer').hidden=true;
+  $('#myRole').hidden=!S.dnShown;
+  if(S.dnShown){
+    const dt=dnTotal(S.f);
+    $('#myRole').innerHTML=`<span class="eyebrow">Your Do Now score: ${dt} / 4 · Your role</span><span class="name">${ROLES[r].name}</span>
+      <ul>${ROLES[r].gets.map(g=>`<li>${g}</li>`).join('')}</ul>
+      <p class="note">Everyone solves the same mystery and reaches the same success criteria. Your role only changes how much help you see.</p>
+      <details><summary class="note" style="cursor:pointer">Teacher: change this role</summary>
+        <div class="rolecards" style="margin-top:8px">${Object.entries(ROLES).map(([k,v])=>`<button class="rolec" type="button" data-setrole="${k}" aria-pressed="${r===k}"><b>${v.name}</b></button>`).join('')}</div></details>
+      <button class="btn" type="button" data-go="discover">Start Discover →</button>`;
+  }
+  const R=ROLES[shown];
+  $('#jobCard').innerHTML=`<span class="eyebrow">My role${r?'':' (mark your Do Now first)'}</span><h3>${R.name}</h3><ul>${R.job.map(t=>`<li>${t}</li>`).join('')}</ul>`;
 }
-$$('#rolecards .rolec').forEach(b=>b.onclick=()=>{S.role=b.dataset.role;save();applyRole(true)});
-applyRole(true);
+document.addEventListener('click',e=>{const b=e.target.closest('[data-setrole]'); if(!b) return; S.roleOverride=b.dataset.setrole; save(); update();});
+$('#dnMark').onclick=()=>{S.dnShown=true;save();update()};
 
 /* ---------- lock & key ---------- */
 const ENZ='M40,150 Q40,110 80,110 L120,110 L130,140 L150,140 L160,110 L200,110 Q240,110 240,150 L240,190 Q240,222 200,222 L80,222 Q40,222 40,190 Z';
@@ -858,7 +707,7 @@ function lockKey(el,steps,title){
     <g class="part L"><polygon points="120,60 140,60 140,140 130,140 120,110" style="fill:var(--egg)"/></g>
     <g class="part R"><polygon points="140,60 160,60 160,110 150,140 140,140" style="fill:var(--egg)"/></g>
     <g class="part x" style="opacity:0"><path d="M178,22 L206,50 M206,22 L178,50" style="stroke:var(--bad)" stroke-width="6" stroke-linecap="round"/></g>
-    <text class="tag" x="168" y="34" style="fill:var(--muted);font-size:13px">egg protein (substrate)</text>
+    <text class="tag" x="168" y="34" style="fill:var(--muted);font-size:13px">substrate</text>
   </svg>
   <div class="steps">${steps.map(s=>`<button type="button" data-s="${s[0]}">${s[1]}</button>`).join('')}</div>
   <p class="cap"></p>`;
@@ -870,7 +719,7 @@ function lockKey(el,steps,title){
     if(s==1||hot){L.style.transform=R.style.transform=`translate(0px,${hot?-52:-48}px)`}
     if(s==2||s==40){L.style.transform=R.style.transform='translate(0px,0px)'}
     if(s==3){L.style.transform='translate(-78px,-44px) rotate(-14deg)';R.style.transform='translate(78px,-44px) rotate(14deg)'}
-    q('.tag').textContent=s==3?'amino acids (products)':hot?'egg protein: no fit':'egg protein (substrate)';
+    q('.tag').textContent=s==3?'products':hot?'can’t fit':'substrate';
     q('.lab').textContent=hot?'denatured':'protease';
     q('.cap').textContent=CAPS[s];
   };
@@ -880,7 +729,7 @@ function lockKey(el,steps,title){
 lockKey($('#lk1'),[[1,'1 Fits'],[2,'2 Complex'],[3,'3 Products']],'The lock and key model');
 lockKey($('#lk2'),[[40,'40 °C'],[90,'90 °C']]);
 
-/* ---------- evidence squares ---------- */
+/* ---------- evidence cards ---------- */
 const TESTS=[
  {n:1,stain:'Egg',powder:'Bio',temp:40,res:'Removed',look:'gone'},
  {n:2,stain:'Egg',powder:'Bio',temp:90,res:'Stained',look:'cooked'},
@@ -898,7 +747,7 @@ function cloth(t){
   if(t.look==='ink') g=`<path d="${blob(62,54,22,23)}" style="fill:var(--ink-stain)"/><path d="M40,78 q6,-12 10,0 q4,12 10,0 q6,-12 10,0 q4,12 10,0" fill="none" style="stroke:var(--ink-stain)" stroke-width="2.5"/>`;
   return `<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" fill="url(#weave)"/>${g}</svg>`;
 }
-const board=$('#board'); S.flip=S.flip||{};
+const board=$('#board');
 TESTS.forEach(t=>{
   const b=document.createElement('div');b.className='flip';b.dataset.n=t.n;b.tabIndex=0;b.setAttribute('role','button');
   b.setAttribute('aria-label',`Test ${t.n} card. Flip to see how it was washed.`);
@@ -911,23 +760,6 @@ TESTS.forEach(t=>{
   board.appendChild(b);
 });
 $('#flipAll').onclick=()=>{const all=TESTS.every(t=>S.flip[t.n]);TESTS.forEach(t=>S.flip[t.n]=!all);save();update()};
-function compareHTML(){
-  if(S.pick.length<2) return `<p class="muted">Pick ${S.pick.length?'one more square':'two squares'}. Start with tests 1 and 3, then tests 1 and 2.</p>`;
-  const [a,b]=S.pick.map(n=>TESTS[n-1]).sort((x,y)=>x.n-y.n);
-  const rows=[['Stain','stain'],['Powder','powder'],['Temperature','temp']];
-  const changed=rows.filter(r=>a[r[1]]!==b[r[1]]);
-  let body=rows.map(r=>{const d=a[r[1]]!==b[r[1]],u=r[1]==='temp'?' °C':'';return `<tr><th>${r[0]}</th><td${d?' class="diff"':''}>${a[r[1]]}${u}</td><td${d?' class="diff"':''}>${b[r[1]]}${u}</td></tr>`}).join('');
-  body+=`<tr><th>Result</th><td class="${a.res==='Removed'?'ok':'no'}">${a.res}</td><td class="${b.res==='Removed'?'ok':'no'}">${b.res}</td></tr>`;
-  let msg;
-  if(changed.length===1){
-    const f=changed[0][0].toLowerCase();
-    msg=a.res!==b.res?`<p><b>Fair comparison.</b> Only the <span class="diff">${f}</span> changed, so the ${f} caused the different result.</p>`:`<p><b>Fair comparison.</b> Only the <span class="diff">${f}</span> changed, and the result stayed the same.</p>`;
-    const k=changed[0][1];
-    const tip=k==='temp'?'Key word to use: <b>denatured</b> (heat changed the active site).':k==='powder'?(a.stain.startsWith('Egg')?'Key word to use: <b>enzymes</b> (non-bio has none).':'Key word to use: <b>specific</b> (starch needs amylase).'):'Key word to use: <b>specific</b>.';
-    msg+=`<p class="boost r-more">${tip}</p>`;
-  } else msg=`<p><b>Not a fair comparison.</b> ${changed.length} things changed, so you can’t tell which one caused the result.</p>`;
-  return `<div class="tbl"><table><thead><tr><th></th><th>Test ${a.n}</th><th>Test ${b.n}</th></tr></thead><tbody>${body}</tbody></table></div>${msg}`;
-}
 
 /* ---------- graph ---------- */
 const DATA=[[0,0],[10,15],[20,33],[30,62],[40,100],[50,80],[60,50],[70,22],[80,5],[90,0]];
@@ -946,69 +778,47 @@ const DATA=[[0,0],[10,15],[20,33],[30,62],[40,100],[50,80],[60,50],[70,22],[80,5
   g.addEventListener('keydown',e=>{const c=e.target.closest('.pt'); if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pick(c)}});
 })();
 
-/* ---------- exit ---------- */
-$('#exMark').onclick=()=>{S.exShown=true;save();update()};
-$('#dnMark').onclick=()=>{S.dnShown=true;save();update()};
-const dnTotal=f=>[1,2,3,4].filter(n=>f['dn'+n]).length;
-const roleFor=n=>n<=1?'collector':n<=3?'analyst':'lead';
-
-/* ---------- clear ---------- */
-$('#clearBtn').onclick=()=>{
-  $('#clearBox').innerHTML='<span>Clear every answer on this device?</span><button class="btn" type="button" id="yes">Yes, clear</button><button class="btn ghost" type="button" id="no">Keep them</button>';
-  $('#no').onclick=()=>location.reload();
-  $('#yes').onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){} location.hash='mystery'; location.reload();};
-};
+/* ---------- check answers ---------- */
+const BASECK=['ck5','ck6','ck7','ck8','ck9','ck10','ck11','ck12','ck13'];
+const LEADCK=['ck5','ck6','ck7','ckC1','ck8','ck9','ck10','ckC2','ck11','ck12','ck13','ckC3'];
+const ckList=role=>role==='lead'?LEADCK:BASECK;
+const LABEL={discover:'Discover (Q5–7)',evidence:'Evidence (Q8–10, group claim)',advice:'Advice to Omar (Q11)',extend:'Extend (Q12–13)'};
 
 /* ---------- render ---------- */
-const MATCH={x1:['protease','amino acids'],x2:['lipase','fatty acids + glycerol'],x3:['amylase','sugars']};
-const KW=['protease','protein','substrate','active site','denatured','shape','optimum','enzyme'];
 function update(){
-  let right=0,done=0;
-  Object.entries(MATCH).forEach(([id,[enz,prod]],i)=>{
-    const v=S.f[id], cell=$('#p'+(i+1));
-    if(v){done++; if(v===enz){right++;cell.textContent=prod;cell.className='ok'} else {cell.textContent='✗ try again';cell.className='no'}} else {cell.textContent='?';cell.className='muted'}
-  });
-  $('#matchFb').innerHTML=done<3?'':(right===3?'<span class="ok">All three matched. Now explain why below.</span>':`<span class="no">${right} of 3 right. Check Research File B.</span>`);
-
+  applyRole(); navLabels();
+  $('#dnReveal').hidden=!S.dnShown; $('#dnScore').textContent=dnTotal(S.f);
   $$('.flip').forEach(b=>b.setAttribute('aria-pressed',S.flip[b.dataset.n]?'true':'false'));
-  const allF=TESTS.every(t=>S.flip[t.n]); $('#flipAll').textContent=allF?'Flip all back':'Flip all cards';
-
+  $('#flipAll').textContent=TESTS.every(t=>S.flip[t.n])?'Flip all back':'Flip all cards';
+  const open=unlocked();
+  $('#checkBody').hidden=!open; $('#lockBox').hidden=open;
+  if(!open){
+    const miss=[]; if(!S.dnShown) miss.push(['mystery','Mark your Do Now in The mystery']);
+    DONE.forEach(k=>{ if(!S.f['done_'+k]) miss.push([k,'Tick Done in '+LABEL[k]]); });
+    $('#lockBox').innerHTML=`<h3>🔒 Locked for now</h3><p>This page opens when you have written every answer on your sheet. Still to do:</p><ul>${miss.map(([k,t])=>`<li><a href="#${k}">${t}</a></li>`).join('')}</ul>`;
+  }
+  const MATCH={x1:'protease',x2:'lipase',x3:'amylase'}; let right=0,done=0;
+  Object.entries(MATCH).forEach(([k,v])=>{ if(S.f[k]){done++; if(S.f[k]===v) right++;} });
+  $('#matchFb').innerHTML=done<3?'':(right===3?'<span class="ok">All three right.</span>':`<span class="no">${right} of 3 right.</span> Check Research File B on the Discover page and correct your table.`);
   const o=S.f.opt,a9=S.f.at90;
   $('#optFb').innerHTML=o===undefined||o===''?'':(+o===40?'<span class="ok">✓</span>':'<span class="no">✗ find the peak</span>');
   $('#at90Fb').innerHTML=a9===undefined||a9===''?'':(+a9===0?'<span class="ok">✓</span>':'<span class="no">✗ read the last point</span>');
-
-  const txt=(S.role==='lead'?(S.f.b0||''):$$('.letter input').map(i=>i.value).join(' ')).toLowerCase();
-  const hit=KW.filter(k=>txt.includes(k));
-  $$('#pips i').forEach((p,i)=>p.classList.toggle('on',i<hit.length));
-  $('#found').innerHTML=hit.map(k=>`<span>${k}</span>`).join('');
-
-  $('#exReveal').hidden=!S.exShown;
-  $('#exScore').textContent=(S.f.xo1?1:0)+(S.f.xo2?1:0);
-  $('#dnReveal').hidden=!S.dnShown;
-  const dt=dnTotal(S.f); $('#dnScore').textContent=dt;
-  $('#dnRole').innerHTML=`<b>${dt}/4</b> suggests role <b>${ROLES[roleFor(dt)].name}</b>. Choose it below once your teacher agrees.`;
+  const list=ckList(myRole()||'analyst');
+  $('#ckScore').textContent=list.filter(k=>S.f[k]).length; $('#ckTotal').textContent=list.length;
 }
 
 /* ---------- teacher view ---------- */
-const LABELS=[['m2','Prediction (start)'],['d0','Why not used up is useful (C)'],['d1','Why every enzyme can’t break every stain'],['t1','Protease vs grease'],['t1b','Why ink is not removed (C)'],
- ['e1','Evidence Q1: tests 1 and 3'],['e2','Evidence Q2: tests 1 and 2'],['e3','Evidence Q3: what happens at 90 °C'],['ch1','Challenge: 90 °C for twice as long'],
- ['b0','Advice to Omar (own words)'],['x_1','Extend Q1'],['x_2','Extend Q2 (now)'],['x_3','Extend Q3 (C)']];
 const RN={collector:'A',analyst:'B',lead:'C'};
 let tRows=[], tTimer=null, tPin='', tSel=null;
 try{tPin=sessionStorage.getItem('rk-pin')||''}catch(e){}
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const BASEQ=[['d7','5'],['d1','6'],['t1','7'],['e1','8'],['e2','9'],['e3','10'],['letter','11'],['x_1','12'],['x_2','13']];
-const LEADQ=[['d7','5'],['d1','6'],['t1','7'],['t1b','C1'],['e1','8'],['e2','9'],['e3','10'],['ch1','C2'],['b0','11'],['x_1','12'],['x_2','13'],['x_3','C3']];
 function calc(d){
   const f=d.f||{};
   const match=['protease','lipase','amylase'].filter((e,i)=>f['x'+(i+1)]===e).length;
   const graph=(f.opt!==undefined&&f.opt!==''&&+f.opt===40?1:0)+(f.at90!==undefined&&f.at90!==''&&+f.at90===0?1:0);
-  const qs=d.role==='lead'?LEADQ:BASEQ;
-  const done=qs.filter(([k])=>f['done_'+k]).length;
-  const ext=d.exShown?(f.xo1?1:0)+(f.xo2?1:0):null;
-  const dn=d.f&&d.dnShown!==false?dnTotal(f):0;
-  const sc=[1,2,3].map(n=>f['sc'+n+'c']?'g':f['sc'+n+'b']?'a':f['sc'+n+'a']?'r':'');
-  return {match,graph,done,qn:qs.length,qs,ext,sc,dn};
+  const stages=DONE.filter(k=>f['done_'+k]).length;
+  const list=ckList(d.role);
+  return {match,graph,stages,ck:list.filter(k=>f[k]).length,ckn:list.length,open:!!d.dnShown&&stages===4,dn:dnTotal(f),list};
 }
 function ago(t){ const s=Math.round((Date.now()-new Date(t).getTime())/1000); if(!isFinite(s)) return '–'; if(s<60) return 'just now'; if(s<3600) return Math.round(s/60)+' min ago'; return Math.round(s/3600)+' h ago'; }
 function renderTeacher(){
@@ -1018,26 +828,27 @@ function renderTeacher(){
   const rows=tRows.filter(r=>!cls||(r.cls||'').trim()===cls).sort((a,b)=>(a.name||'').localeCompare(b.name||''));
   const C=rows.map(calc), n=rows.length;
   const live=rows.filter(r=>Date.now()-new Date(r.updated).getTime()<180000).length;
-  const avg=(a)=>a.length?(a.reduce((x,y)=>x+y,0)/a.length).toFixed(1):'–';
-  const exts=C.map(c=>c.ext).filter(v=>v!==null);
-  $('#tStats').innerHTML=[[n,'students'],[live,'active in last 3 min'],[n?Math.round(rows.filter(r=>(r.stage||0)>=4).length/n*100)+'%':'–','reached Evidence'],[avg(C.map(c=>c.dn))+' / 4','Do Now average'],[avg(C.map(c=>c.match))+' / 3','enzyme team match'],[avg(exts)+' / 2','Extend score ('+exts.length+' marked)']]
-    .map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
-  const head='<thead><tr><th>Student</th><th>Class</th><th>Do Now</th><th>Role</th><th>Progress</th><th>Enzyme team</th><th>Graph</th><th>Written on sheet</th><th>Extend</th><th>Success criteria</th><th>Last seen</th></tr></thead>';
+  const avg=a=>a.length?(a.reduce((x,y)=>x+y,0)/a.length).toFixed(1):'–';
+  $('#tStats').innerHTML=[[n,'students'],[live,'active in last 3 min'],[avg(rows.filter(r=>r.dnShown).map(r=>dnTotal(r.f||{})))+' / 4','Do Now average'],
+    ['A '+rows.filter(r=>r.role==='collector').length+' · B '+rows.filter(r=>r.role==='analyst').length+' · C '+rows.filter(r=>r.role==='lead').length,'roles'],
+    [C.filter(c=>c.open).length,'reached Check answers']].map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
+  const head='<thead><tr><th>Student</th><th>Class</th><th>Do Now</th><th>Role</th><th>Progress</th><th>Stages done</th><th>Check score</th><th>Enzyme table</th><th>Graph</th><th>Last seen</th></tr></thead>';
   const body=rows.map((r,i)=>{const c=C[i],st=r.stage||1,curI=STAGES.findIndex(s=>s.id===r.cur)+1,isLive=Date.now()-new Date(r.updated).getTime()<180000;
-    return `<tr data-id="${esc(r.id)}" aria-selected="${tSel===r.id}"><td>${isLive?'<i class="live" title="Active"></i>':''}<b>${esc(r.name||'(no name)')}</b></td><td>${esc(r.cls)}</td><td>${c.dn} / 4</td><td>${RN[r.role]||'–'}</td>
+    return `<tr data-id="${esc(r.id)}" aria-selected="${tSel===r.id}"><td>${isLive?'<i class="live" title="Active"></i>':''}<b>${esc(r.name||'(no name)')}</b></td><td>${esc(r.cls)}</td>
+    <td>${r.dnShown?c.dn+' / 4':'–'}</td><td>${RN[r.role]||'–'}</td>
     <td><span class="prog6" title="Reached stage ${st}">${STAGES.map((s,k)=>`<i class="${k+1===curI?'now':k<st?'on':''}"></i>`).join('')}</span></td>
-    <td class="${c.match===3?'ok':c.match?'':'muted'}">${c.match} / 3</td><td class="${c.graph===2?'ok':''}">${c.graph} / 2</td><td>${c.done} / ${c.qn}</td>
-    <td class="${c.ext===2?'ok':''}">${c.ext===null?'–':c.ext+' / 2'}</td><td><span class="dots">${c.sc.map(x=>`<i class="${x}"></i>`).join('')}</span></td><td class="muted">${ago(r.updated)}</td></tr>`}).join('');
-  $('#tTable').innerHTML=head+'<tbody>'+(body||'<tr><td colspan="11" class="muted">No students yet. Answers appear here once students start typing.</td></tr>')+'</tbody>';
+    <td class="${c.stages===4?'ok':''}">${c.stages} / 4</td><td>${c.open?c.ck+' / '+c.ckn:'locked'}</td>
+    <td class="${c.match===3?'ok':''}">${c.open?c.match+' / 3':'–'}</td><td class="${c.graph===2?'ok':''}">${c.open?c.graph+' / 2':'–'}</td><td class="muted">${ago(r.updated)}</td></tr>`}).join('');
+  $('#tTable').innerHTML=head+'<tbody>'+(body||'<tr><td colspan="10" class="muted">No students yet. They appear once they type their name.</td></tr>')+'</tbody>';
   const sel=rows.find(r=>r.id===tSel);
   $('#tDetail').hidden=!sel;
   if(sel){ const f=sel.f||{}, c=calc(sel);
     $('#tDetail').innerHTML=`<h3>${esc(sel.name||'(no name)')} · ${esc(sel.cls)} · Role ${RN[sel.role]||'–'}</h3><div class="ans">`+
-      `<div><span>Do Now (self-marked)</span><p>${[1,2,3,4].map(n=>'Q'+n+(f['dn'+n]?' ✓':' ✗')).join(' · ')}  =  ${c.dn} / 4</p></div>`+
-      `<div><span>Enzyme team</span><p>Egg: ${esc(f.x1||'–')} · Grease: ${esc(f.x2||'–')} · Rice: ${esc(f.x3||'–')}</p></div>`+
-      `<div><span>Graph</span><p>Fastest at ${esc(f.opt||'–')} °C · Activity at 90 °C: ${esc(f.at90||'–')} %</p></div>`+
-      `<div><span>Written on sheet (ticked done)</span><p>${c.qs.map(([k,q])=>qName(q)+(f['done_'+k]?' ✓':' –')).join(' · ')}</p></div>`+
-      `<div><span>Extend (self-marked)</span><p>${sel.exShown?('Q12 '+(f.xo1?'✓':'✗')+' · Q13 '+(f.xo2?'✓':'✗')):'Not marked yet'}</p></div></div>`; }
+      `<div><span>Do Now (self-marked)</span><p>${sel.dnShown?[1,2,3,4].map(n=>'Q'+n+(f['dn'+n]?' ✓':' ✗')).join(' · ')+'  =  '+c.dn+' / 4':'Not marked yet'}</p></div>`+
+      `<div><span>Stages ticked done</span><p>${DONE.map(k=>LABEL[k]+(f['done_'+k]?' ✓':' –')).join(' · ')}</p></div>`+
+      `<div><span>Check answers (self-marked)</span><p>${c.open?c.list.map(k=>k.replace('ckC','C').replace('ck','Q')+(f[k]?' ✓':' ✗')).join(' · '):'Locked'}</p></div>`+
+      `<div><span>Enzyme table</span><p>Egg: ${esc(f.x1||'–')} · Grease: ${esc(f.x2||'–')} · Rice: ${esc(f.x3||'–')}</p></div>`+
+      `<div><span>Graph</span><p>Fastest at ${esc(f.opt||'–')} °C · Activity at 90 °C: ${esc(f.at90||'–')} %</p></div></div>`; }
 }
 function loadTeacher(){
   if(!SYNC_URL||!tPin) return;
@@ -1047,7 +858,7 @@ function loadTeacher(){
   }).catch(()=>{ $('#tMsg').textContent='Could not reach the Google Sheet. Check your internet connection and the SYNC_URL link.'; });
 }
 function teacherOpen(){
-  $('#tSetup').hidden=!!SYNC_URL; $('#tLogin').hidden=!SYNC_URL||!!tPin&&!$('#tView').hidden;
+  $('#tSetup').hidden=!!SYNC_URL; $('#tLogin').hidden=!SYNC_URL||(!!tPin&&!$('#tView').hidden);
   if(SYNC_URL&&tPin){ loadTeacher(); clearInterval(tTimer); tTimer=setInterval(loadTeacher,20000); }
 }
 function stopTeacher(){ clearInterval(tTimer); tTimer=null; }
@@ -1057,7 +868,7 @@ $('#tRefresh').onclick=loadTeacher;
 $('#tClass').onchange=renderTeacher;
 $('#tTable').addEventListener('click',e=>{const tr=e.target.closest('tr[data-id]'); if(!tr) return; tSel=tSel===tr.dataset.id?null:tr.dataset.id; renderTeacher();});
 $('#tClear').onclick=()=>{
-  const box=$('#tClearBox'); box.innerHTML='<span>Delete every student’s saved answers from the Google Sheet?</span><button class="btn" type="button" id="tYes">Yes, delete all</button><button class="btn ghost" type="button" id="tNo">Keep them</button>';
+  $('#tClearBox').innerHTML='<span>Delete every student’s saved progress from the Google Sheet?</span><button class="btn" type="button" id="tYes">Yes, delete all</button><button class="btn ghost" type="button" id="tNo">Keep it</button>';
   $('#tNo').onclick=()=>location.reload();
   $('#tYes').onclick=()=>{fetch(SYNC_URL+'?pin='+encodeURIComponent(tPin)+'&action=clear').then(()=>location.reload()).catch(()=>location.reload())};
 };
