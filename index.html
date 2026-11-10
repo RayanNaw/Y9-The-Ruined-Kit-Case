@@ -377,14 +377,12 @@ ol.dn li{padding-left:4px}
   </div>
 
   <div class="card">
-    <div class="onsheet"><span>✎ Write your answers on your sheet · <b>Q1–6</b>. Then mark them here.</span></div>
+    <div class="onsheet"><span>✎ Write your answers on your sheet · <b>Q1–4</b>. Then mark them here.</span></div>
     <ol class="dn">
       <li><b>Name the main nutrient in egg, in grease and in rice.</b> <span class="mk">1 mark</span></li>
       <li><b>Why must large food molecules be broken into small molecules during digestion?</b> <span class="mk">1 mark</span></li>
       <li><b>Predict: what does the powder do to an egg stain, and why did the 90 °C wash fail?</b> <span class="mk">1 mark</span></li>
       <li><b>In which organ are small food molecules absorbed into the blood?</b> <span class="mk">1 mark</span></li>
-      <li><b>If you chew bread for a long time it starts to taste sweet. What is the starch being broken down into?</b> <span class="mk">1 mark</span></li>
-      <li><b>Challenge:</b> when you fry an egg, the clear egg white turns solid white and can never turn back. Use this idea to suggest why the 90 °C wash left the egg stain stuck on the kit. <span class="mk">1 mark</span></li>
     </ol>
     <button class="btn" type="button" id="dnMark">Mark my Do Now</button>
     <div class="reveal" id="dnReveal" hidden>
@@ -393,16 +391,14 @@ ol.dn li{padding-left:4px}
       <label class="tick"><input type="checkbox" id="dn2"><span><b>2</b> So they are small enough to be absorbed through the small intestine wall into the blood.</span></label>
       <label class="tick"><input type="checkbox" id="dn3"><span><b>3</b> Something in the powder breaks the egg protein into small pieces that wash away, like digestion. The very hot water stopped it working. <span class="muted">Both parts for the mark.</span></span></label>
       <label class="tick"><input type="checkbox" id="dn4"><span><b>4</b> The small intestine.</span></label>
-      <label class="tick"><input type="checkbox" id="dn5"><span><b>5</b> Sugar (glucose).</span></label>
-      <label class="tick"><input type="checkbox" id="dn6"><span><b>6</b> Heat changes protein for good, so it cannot go back. At 90 °C the protein was changed, so it could not be broken down and washed out.</span></label>
-      <div class="box"><span class="score"><span id="dnScore">0</span> / 6</span><span id="dnRole" class="boost"></span></div>
+      <div class="box"><span class="score"><span id="dnScore">0</span> / 4</span><span id="dnRole" class="boost"></span></div>
     </div>
   </div>
 
   <div class="card">
     <span class="eyebrow">My role</span>
     <h3>Choose your role: A, B or C</h3>
-    <p class="small"><b>0–2 marks:</b> A &nbsp;·&nbsp; <b>3–4 marks:</b> B &nbsp;·&nbsp; <b>5–6 marks:</b> C &nbsp;·&nbsp; Your teacher confirms your role.</p>
+    <p class="small"><b>0–1 marks:</b> A &nbsp;·&nbsp; <b>2–3 marks:</b> B &nbsp;·&nbsp; <b>4 marks:</b> C &nbsp;·&nbsp; Your teacher confirms your role.</p>
     <div class="rolecards" id="rolecards">
       <button class="rolec" type="button" data-role="collector" aria-pressed="false"><b>A · Evidence Collector</b><span>Hints open, word bank and sentence frames on screen.</span></button>
       <button class="rolec" type="button" data-role="analyst" aria-pressed="false"><b>B · Lab Analyst</b><span>Hints when you tap. Toolkit available.</span></button>
@@ -648,8 +644,8 @@ ol.dn li{padding-left:4px}
   <div class="card">
     <h3>Then and now</h3>
     <div class="tn">
-      <div class="then"><span class="eyebrow">Then</span><p>Look at your Do Now prediction on your sheet (<b>Q3 and Q6</b>).</p></div>
-      <div class="now"><span class="eyebrow">Now</span><p>Look at your Extend answer (<b>Q15</b>). On your sheet, write what changed in your thinking.</p></div>
+      <div class="then"><span class="eyebrow">Then</span><p>Look at your Do Now prediction on your sheet (<b>Q3</b>).</p></div>
+      <div class="now"><span class="eyebrow">Now</span><p>Look at your Extend answer (<b>Q13</b>). On your sheet, write what changed in your thinking.</p></div>
     </div>
   </div>
 
@@ -770,14 +766,14 @@ $$('.boxArt').forEach(el=>el.innerHTML=powderBox());
 
 /* ---------- form persistence ---------- */
 /* ---------- written answers go on the paper sheet ---------- */
-const SHEETQ={d0:'C1',d1:'8',t1:'9',t1b:'C2',e1:'10',e2:'11',e3:'12',ch1:'C3',b0:'13',x_1:'14',x_2:'15',x_3:'C4'};
+const SHEETQ={d0:'C1',d1:'6',t1:'7',t1b:'C2',e1:'8',e2:'9',e3:'10',ch1:'C3',b0:'11',x_1:'12',x_2:'13',x_3:'C4'};
 const qName=q=>q.startsWith('C')?q:'Q'+q;
 function marker(id,q){const d=document.createElement('div');d.className='onsheet';
   d.innerHTML=`<span>✎ Write on your sheet · <b>${qName(q)}</b></span><label class="tick"><input type="checkbox" id="done_${id}">Done</label>`;return d;}
 Object.entries(SHEETQ).forEach(([id,q])=>{const ta=$('#'+id); if(ta) ta.replaceWith(marker(id,q));});
-$('#slot7').replaceWith(marker('d7','7'));
+$('#slot7').replaceWith(marker('d7','5'));
 $$('.letter input').forEach(i=>{const s=document.createElement('span');s.className='blank';s.textContent='_'.repeat(Math.max(4,+i.size||6));i.replaceWith(s);});
-const lm=marker('letter','13'); lm.classList.add('r-mid'); $('#letter').after(lm);
+const lm=marker('letter','11'); lm.classList.add('r-mid'); $('#letter').after(lm);
 $('.meter').hidden=true;
 
 $$('main textarea, main input, main select').forEach(el=>{
@@ -954,8 +950,8 @@ const DATA=[[0,0],[10,15],[20,33],[30,62],[40,100],[50,80],[60,50],[70,22],[80,5
 /* ---------- exit ---------- */
 $('#exMark').onclick=()=>{S.exShown=true;save();update()};
 $('#dnMark').onclick=()=>{S.dnShown=true;save();update()};
-const dnTotal=f=>[1,2,3,4,5,6].filter(n=>f['dn'+n]).length;
-const roleFor=n=>n<=2?'collector':n<=4?'analyst':'lead';
+const dnTotal=f=>[1,2,3,4].filter(n=>f['dn'+n]).length;
+const roleFor=n=>n<=1?'collector':n<=3?'analyst':'lead';
 
 /* ---------- clear ---------- */
 $('#clearBtn').onclick=()=>{
@@ -991,7 +987,7 @@ function update(){
   $('#exScore').textContent=(S.f.xo1?1:0)+(S.f.xo2?1:0);
   $('#dnReveal').hidden=!S.dnShown;
   const dt=dnTotal(S.f); $('#dnScore').textContent=dt;
-  $('#dnRole').innerHTML=`<b>${dt}/6</b> suggests role <b>${ROLES[roleFor(dt)].name}</b>. Choose it below once your teacher agrees.`;
+  $('#dnRole').innerHTML=`<b>${dt}/4</b> suggests role <b>${ROLES[roleFor(dt)].name}</b>. Choose it below once your teacher agrees.`;
 }
 
 /* ---------- teacher view ---------- */
@@ -1002,8 +998,8 @@ const RN={collector:'A',analyst:'B',lead:'C'};
 let tRows=[], tTimer=null, tPin='', tSel=null;
 try{tPin=sessionStorage.getItem('rk-pin')||''}catch(e){}
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const BASEQ=[['d7','7'],['d1','8'],['t1','9'],['e1','10'],['e2','11'],['e3','12'],['letter','13'],['x_1','14'],['x_2','15']];
-const LEADQ=[['d7','7'],['d0','C1'],['d1','8'],['t1','9'],['t1b','C2'],['e1','10'],['e2','11'],['e3','12'],['ch1','C3'],['b0','13'],['x_1','14'],['x_2','15'],['x_3','C4']];
+const BASEQ=[['d7','5'],['d1','6'],['t1','7'],['e1','8'],['e2','9'],['e3','10'],['letter','11'],['x_1','12'],['x_2','13']];
+const LEADQ=[['d7','5'],['d0','C1'],['d1','6'],['t1','7'],['t1b','C2'],['e1','8'],['e2','9'],['e3','10'],['ch1','C3'],['b0','11'],['x_1','12'],['x_2','13'],['x_3','C4']];
 function calc(d){
   const f=d.f||{};
   const match=['protease','lipase','amylase'].filter((e,i)=>f['x'+(i+1)]===e).length;
@@ -1025,11 +1021,11 @@ function renderTeacher(){
   const live=rows.filter(r=>Date.now()-new Date(r.updated).getTime()<180000).length;
   const avg=(a)=>a.length?(a.reduce((x,y)=>x+y,0)/a.length).toFixed(1):'–';
   const exts=C.map(c=>c.ext).filter(v=>v!==null);
-  $('#tStats').innerHTML=[[n,'students'],[live,'active in last 3 min'],[n?Math.round(rows.filter(r=>(r.stage||0)>=4).length/n*100)+'%':'–','reached Evidence'],[avg(C.map(c=>c.dn))+' / 6','Do Now average'],[avg(C.map(c=>c.match))+' / 3','enzyme team match'],[avg(exts)+' / 2','Extend score ('+exts.length+' marked)']]
+  $('#tStats').innerHTML=[[n,'students'],[live,'active in last 3 min'],[n?Math.round(rows.filter(r=>(r.stage||0)>=4).length/n*100)+'%':'–','reached Evidence'],[avg(C.map(c=>c.dn))+' / 4','Do Now average'],[avg(C.map(c=>c.match))+' / 3','enzyme team match'],[avg(exts)+' / 2','Extend score ('+exts.length+' marked)']]
     .map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
   const head='<thead><tr><th>Student</th><th>Class</th><th>Do Now</th><th>Role</th><th>Progress</th><th>Enzyme team</th><th>Graph</th><th>Written on sheet</th><th>Extend</th><th>Success criteria</th><th>Last seen</th></tr></thead>';
   const body=rows.map((r,i)=>{const c=C[i],st=r.stage||1,curI=STAGES.findIndex(s=>s.id===r.cur)+1,isLive=Date.now()-new Date(r.updated).getTime()<180000;
-    return `<tr data-id="${esc(r.id)}" aria-selected="${tSel===r.id}"><td>${isLive?'<i class="live" title="Active"></i>':''}<b>${esc(r.name||'(no name)')}</b></td><td>${esc(r.cls)}</td><td>${c.dn} / 6</td><td>${RN[r.role]||'–'}</td>
+    return `<tr data-id="${esc(r.id)}" aria-selected="${tSel===r.id}"><td>${isLive?'<i class="live" title="Active"></i>':''}<b>${esc(r.name||'(no name)')}</b></td><td>${esc(r.cls)}</td><td>${c.dn} / 4</td><td>${RN[r.role]||'–'}</td>
     <td><span class="prog6" title="Reached stage ${st}">${STAGES.map((s,k)=>`<i class="${k+1===curI?'now':k<st?'on':''}"></i>`).join('')}</span></td>
     <td class="${c.match===3?'ok':c.match?'':'muted'}">${c.match} / 3</td><td class="${c.graph===2?'ok':''}">${c.graph} / 2</td><td>${c.done} / ${c.qn}</td>
     <td class="${c.ext===2?'ok':''}">${c.ext===null?'–':c.ext+' / 2'}</td><td><span class="dots">${c.sc.map(x=>`<i class="${x}"></i>`).join('')}</span></td><td class="muted">${ago(r.updated)}</td></tr>`}).join('');
@@ -1038,11 +1034,11 @@ function renderTeacher(){
   $('#tDetail').hidden=!sel;
   if(sel){ const f=sel.f||{}, c=calc(sel);
     $('#tDetail').innerHTML=`<h3>${esc(sel.name||'(no name)')} · ${esc(sel.cls)} · Role ${RN[sel.role]||'–'}</h3><div class="ans">`+
-      `<div><span>Do Now (self-marked)</span><p>${[1,2,3,4,5,6].map(n=>'Q'+n+(f['dn'+n]?' ✓':' ✗')).join(' · ')}  =  ${c.dn} / 6</p></div>`+
+      `<div><span>Do Now (self-marked)</span><p>${[1,2,3,4].map(n=>'Q'+n+(f['dn'+n]?' ✓':' ✗')).join(' · ')}  =  ${c.dn} / 4</p></div>`+
       `<div><span>Enzyme team</span><p>Egg: ${esc(f.x1||'–')} · Grease: ${esc(f.x2||'–')} · Rice: ${esc(f.x3||'–')}</p></div>`+
       `<div><span>Graph</span><p>Fastest at ${esc(f.opt||'–')} °C · Activity at 90 °C: ${esc(f.at90||'–')} %</p></div>`+
       `<div><span>Written on sheet (ticked done)</span><p>${c.qs.map(([k,q])=>qName(q)+(f['done_'+k]?' ✓':' –')).join(' · ')}</p></div>`+
-      `<div><span>Extend (self-marked)</span><p>${sel.exShown?('Q14 '+(f.xo1?'✓':'✗')+' · Q15 '+(f.xo2?'✓':'✗')):'Not marked yet'}</p></div></div>`; }
+      `<div><span>Extend (self-marked)</span><p>${sel.exShown?('Q12 '+(f.xo1?'✓':'✗')+' · Q13 '+(f.xo2?'✓':'✗')):'Not marked yet'}</p></div></div>`; }
 }
 function loadTeacher(){
   if(!SYNC_URL||!tPin) return;
